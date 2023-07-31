@@ -14,19 +14,21 @@ import {
     CardContent,
     CardHeader,
     Card,
-    Tab,
-    Box
+    Button,
+    TextField
 } from '@mui/material';
 
-import { GetTodoByID, RemoveTodo, ToggleFav } from '../utils/utils'
+import { GetTodoByID, RemoveTodo, ToggleFav, ToggleFinished } from '../utils/utils'
 import { useDispatch, useSelector } from 'react-redux';
 import Dialog from './Dialog'
 import FlatList from 'flatlist-react'
 
-export default function TodoListCard({ userId, showFav }) {
+export default function TodoListCard({ userId, showFav, showFinished }) {
     const dispatch = useDispatch();
+
     const data = useSelector(state => state.todo.data)
     const favoritedData = useSelector(state => state.todo.favoritedData)
+    const finishedData = useSelector(state => state.todo.finishedData)
 
     const [updateTodoDialog, setUpdateTodoDialog] = React.useState(false);
     const [selectedTodo, setSelectedTodo] = React.useState(false)
@@ -77,17 +79,16 @@ export default function TodoListCard({ userId, showFav }) {
                 }
             />
             <CardContent>
-                <Typography
-                    variant="body1"
+                <Button
                     style={{
-                        color: Todo.isFinished ? "green" : "red"
+                        color: Todo.isFinished ? "green" : "red",
+                        textAlign: 'left',
+
                     }}
-                    color={'white'}
-                    borderRadius={20}
-                    flexWrap={'wrap'}
+                    onClick={() => ToggleFinished(dispatch, Todo.todoID, Todo.isFinished)}
                 >
                     {Todo.isFinished ? "Finished :)" : "Still working on"}
-                </Typography>
+                </Button>
                 <Typography
                     variant="body1"
                     style={{
@@ -146,7 +147,7 @@ export default function TodoListCard({ userId, showFav }) {
         >
             <Grid style={{ overflow: 'auto', paddingLeft: 8, paddingRight: 8, height: '80vh' }} >
                 <FlatList
-                    list={showFav ? favoritedData : data}
+                    list={showFav ? favoritedData : showFinished ? finishedData : data}
                     renderItem={renderItem}
 
                 />

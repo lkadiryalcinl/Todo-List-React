@@ -150,7 +150,6 @@ export default function TodoDialog({ dialog, changeDialog, dispatch, type, userI
                                             inline
                                         />
                                     </Grid>
-
                                     <IconButton type="submit" disabled={isSubmitting} onClick={handleSubmit}>
                                         Submit
                                     </IconButton>

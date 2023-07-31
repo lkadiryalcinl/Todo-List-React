@@ -6,17 +6,21 @@ import TodoListCard from '../components/TodoListCard';
 import Dialog from '../components/Dialog'
 import { useDispatch } from "react-redux";
 import { useLocation } from 'react-router-dom'
-import { FetchData } from '../utils/utils';
+import { FetchData, FetchFavData, FetchFinishedData } from '../utils/utils';
 
 const Home = () => {
     const dispatch = useDispatch();
     const location = useLocation()
     const userId = location.state.userId
     const [AddTodoDialog, setAddTodoDialog] = React.useState(false);
-    const [showFav,setShowFav] = React.useState(false);
+
+    const [showFav, setShowFav] = React.useState(false);
+    const [showFinished, setShowFinished] = React.useState(false);
 
     React.useEffect(() => {
         FetchData(dispatch, userId);
+        FetchFavData(dispatch,userId);
+        FetchFinishedData(dispatch,userId);
     }, [])
 
     const handleAddDialog = () => {
@@ -55,7 +59,10 @@ const Home = () => {
             <Button onClick={() => setShowFav(!showFav)}>
                 Show Just Favs
             </Button>
-            <TodoListCard userId={userId} showFav={showFav} />
+            <Button onClick={() => setShowFinished(!showFinished)}>
+                Show Just Finished
+            </Button>
+            <TodoListCard userId={userId} showFav={showFav} showFinished={showFinished} />
         </Grid>
     )
 }

@@ -84,15 +84,29 @@ const ToggleFav = async (dispatch, TodoID, isFav) => {
     }
 };
 
-const ToggleFinished = async (TodoID) => {
+const ToggleFinished = async (dispatch, TodoID, isFinished) => {
+    const body = {
+        todoID: TodoID,
+    };
+
     try {
-        await fetch(`https://localhost:44389/api/todo/${TodoID}`, {
+        const response = await fetch(`https://localhost:44389/api/todo/finished`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: TodoID,
+            body: JSON.stringify(body),
         })
+        const data = await response.json();
+
+        if (response.ok) {
+            dispatch({ type: 'REMOVE_FROM_LIST', payload: data })
+            !isFinished ?
+                dispatch({ type: 'ADD_FINISHED', payload: data }) :
+                dispatch({ type: 'REMOVE_FINISHED', payload: data })
+        } else {
+            console.error('Toggle Finished Failed:', response.status, response.statusText);
+        }
     } catch (error) {
         console.error('Request Failed', error.message);
     }
@@ -106,6 +120,7 @@ const GetTodoByID = async (TodoID) => {
                 'Content-Type': 'application/json',
             },
         });
+
         if (response.ok) {
             const data = await response.json()
             return data;
@@ -154,7 +169,44 @@ const FetchData = async (dispatch, userId) => {
         })
         if (response.ok) {
             const data = await response.json()
-            dispatch({ type: "ADD", payload: data })
+            dispatch({ type: "ADD_DATA", payload: data })
+        } else {
+            console.error('Todo Fetch Failed:', response.status, response.statusText);
+        }
+    } catch (error) {
+        console.error('Request Failed', error.message);
+    }
+}
+
+const FetchFavData = async (dispatch, userId) => {
+    try {
+        const response = await fetch(`https://localhost:44389/api/favtodo/elements/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        if (response.ok) {
+            const data = await response.json()
+            dispatch({ type: "ADD_FAV_DATA", payload: data })
+        } else {
+            console.error('Todo Fetch Failed:', response.status, response.statusText);
+        }
+    } catch (error) {
+        console.error('Request Failed', error.message);
+    }
+}
+const FetchFinishedData = async (dispatch, userId) => {
+    try {
+        const response = await fetch(`https://localhost:44389/api/finishedtodo/elements/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        if (response.ok) {
+            const data = await response.json()
+            dispatch({ type: "ADD_FINISHED_DATA", payload: data })
         } else {
             console.error('Todo Fetch Failed:', response.status, response.statusText);
         }
@@ -171,5 +223,7 @@ export {
     HandleAuth,
     GetTodoByID,
     ToggleFinished,
-    FetchData
+    FetchData,
+    FetchFinishedData,
+    FetchFavData
 }
