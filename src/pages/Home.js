@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Navbar from '../components/Navbar'
-import { Grid, IconButton } from '@mui/material';
+import { Button, Grid, IconButton } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import TodoListCard from '../components/TodoListCard';
 import Dialog from '../components/Dialog'
@@ -13,6 +13,7 @@ const Home = () => {
     const location = useLocation()
     const userId = location.state.userId
     const [AddTodoDialog, setAddTodoDialog] = React.useState(false);
+    const [showFav,setShowFav] = React.useState(false);
 
     React.useEffect(() => {
         FetchData(dispatch, userId);
@@ -37,19 +38,24 @@ const Home = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',
-                    alignItems: 'center'
+                    alignItems: 'center',
                 }}
             >
                 <IconButton style={{ backgroundColor: '#F5A623' }}>
                     <Add onClick={() => {
                         handleAddDialog()
                     }}
-                        style={{ color: 'white' }}
+                        style={{
+                            color: 'white'
+                        }}
                     />
                     <Dialog dialog={AddTodoDialog} changeDialog={() => handleAddDialog()} dispatch={dispatch} type={false} userId={userId} />
                 </IconButton>
-                <TodoListCard userId={userId} />
             </Grid>
+            <Button onClick={() => setShowFav(!showFav)}>
+                Show Just Favs
+            </Button>
+            <TodoListCard userId={userId} showFav={showFav} />
         </Grid>
     )
 }

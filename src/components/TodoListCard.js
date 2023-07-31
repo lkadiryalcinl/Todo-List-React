@@ -18,30 +18,18 @@ import {
     Box
 } from '@mui/material';
 
-import {
-    TabContext,
-    TabPanel,
-    TabList
-} from '@mui/lab';
-
 import { GetTodoByID, RemoveTodo, ToggleFav } from '../utils/utils'
 import { useDispatch, useSelector } from 'react-redux';
 import Dialog from './Dialog'
 import FlatList from 'flatlist-react'
 
-export default function TodoListCard({ userId }) {
+export default function TodoListCard({ userId, showFav }) {
     const dispatch = useDispatch();
-
     const data = useSelector(state => state.todo.data)
-    const favoriteTodos = useSelector(state => state.todo.favoriteTodos)
+    const favoritedData = useSelector(state => state.todo.favoritedData)
 
     const [updateTodoDialog, setUpdateTodoDialog] = React.useState(false);
     const [selectedTodo, setSelectedTodo] = React.useState(false)
-    const [value, setValue] = React.useState("1")
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
 
     const handleUpdateDialog = () => {
         setUpdateTodoDialog(!updateTodoDialog)
@@ -49,7 +37,7 @@ export default function TodoListCard({ userId }) {
 
     const renderItem = (Todo) =>
         <Card
-            sx={{ width: 'auto', maxWidth: '70w', height: 'auto', marginBottom: 2, boxShadow: 8 }}
+            sx={{ marginBottom: 2, boxShadow: 8, width: '70vw' }}
             key={Todo.todoID}
         >
             <CardHeader
@@ -154,52 +142,15 @@ export default function TodoListCard({ userId }) {
 
     return (
         <Grid
-            style={{ justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column' }}
+            style={{ justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column', overflow: 'auto' }}
         >
-            <TabContext value={value} >
-                <Box sx={{
-                    borderBottom: 1,
-                    borderColor: 'divider',
-                    backgroundColor: '#F5A623',
-                    width: '70vw',
-                    borderTopLeftRadius: 20,
-                    borderTopRightRadius: 20,
-                    marginTop: 2
-                }}>
-                    <TabList onChange={handleChange} centered >
-                        <Tab
-                            label="Todos"
-                            value="1"
-                        />
-                        <Tab
-                            label="Finished Todos"
-                            value="2"
-                        />
-                        <Tab
-                            label="Favorited Todos"
-                            value="3"
+            <Grid style={{ overflow: 'auto', paddingLeft: 8, paddingRight: 8, height: '80vh' }} >
+                <FlatList
+                    list={showFav ? favoritedData : data}
+                    renderItem={renderItem}
 
-                        />
-                    </TabList>
-                </Box>
-                <Box width={'auto'} height={'70vh'} overflow={'auto'}>
-                    <TabPanel value="1">
-                        <FlatList
-                            list={data}
-                            renderItem={renderItem}
-                        />
-                    </TabPanel>
-                    <TabPanel value="2">
-
-                    </TabPanel>
-                    <TabPanel value="3">
-                        <FlatList
-                            list={favoriteTodos}
-                            renderItem={renderItem}
-                        />
-                    </TabPanel>
-                </Box>
-            </TabContext>
+                />
+            </Grid>
         </Grid>
     );
 }

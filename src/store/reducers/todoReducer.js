@@ -1,6 +1,6 @@
 const initialState = {
     data: [],
-    favoriteTodos: [],
+    favoritedData: []
 };
 
 const todoReducer = (state = initialState, action) => {
@@ -23,14 +23,19 @@ const todoReducer = (state = initialState, action) => {
         case 'ADD_FAV':
             return {
                 ...state,
-                data:state.data.filter(element => element.todoID !== action.payload.todoID),
-                favoriteTodos : [action.payload,...state.favoriteTodos]
+                data: [action.payload,...state.data],
+                favoritedData: [action.payload,...state.favoritedData]
             }
         case 'REMOVE_FAV':
             return{
                 ...state,
-                favoriteTodos : state.favoriteTodos.filter(element => element.todoID !== action.payload.todoID),
-                data :[action.payload,...state.data]
+                data :[...state.data,action.payload],
+                favoritedData: state.favoritedData.filter(element => element.todoID !== action.payload.todoID)
+            }
+        case 'REMOVE_FROM_LIST':
+            return {
+                ...state,
+                data:state.data.filter(element => element.todoID !== action.payload.todoID),
             }
         default:
             return state;
