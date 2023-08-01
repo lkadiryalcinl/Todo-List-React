@@ -15,15 +15,22 @@ import {
     CardHeader,
     Card,
     Button,
-    TextField
+    Box,
+    Tab,
 } from '@mui/material';
+
+import {
+    TabContext,
+    TabList,
+    TabPanel
+} from '@mui/lab'
 
 import { GetTodoByID, RemoveTodo, ToggleFav, ToggleFinished } from '../utils/utils'
 import { useDispatch, useSelector } from 'react-redux';
 import Dialog from './Dialog'
 import FlatList from 'flatlist-react'
 
-export default function TodoListCard({ userId, showFav, showFinished }) {
+export default function TodoListCard({ userId }) {
     const dispatch = useDispatch();
 
     const data = useSelector(state => state.todo.data)
@@ -31,11 +38,25 @@ export default function TodoListCard({ userId, showFav, showFinished }) {
     const finishedData = useSelector(state => state.todo.finishedData)
 
     const [updateTodoDialog, setUpdateTodoDialog] = React.useState(false);
-    const [selectedTodo, setSelectedTodo] = React.useState(false)
+    const [selectedTodo, setSelectedTodo] = React.useState(null)
+    const [value, setValue] = React.useState('1');
 
-    const handleUpdateDialog = () => {
-        setUpdateTodoDialog(!updateTodoDialog)
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
+    const handleUpdateDialog = (todoID) => {
+        console.log("todo: " + todoID);
+        console.log("selected" + selectedTodo);
+        if (todoID === selectedTodo?.todoID)
+            setUpdateTodoDialog(true)
     }
+    const handleSelected = async (todoID) => {
+        const selectedData = await GetTodoByID(todoID, "todo/");
+
+        setSelectedTodo(selectedData.todoID);
+    }
+
 
     const renderItem = (Todo) =>
         <Card
@@ -45,26 +66,33 @@ export default function TodoListCard({ userId, showFav, showFinished }) {
             <CardHeader
                 action={
                     <CardActions>
-                        <IconButton aria-label="add to favorites" onClick={
+                        {!Todo.isFinished && <IconButton aria-label="add to favorites" onClick={
                             () => {
-                                ToggleFav(dispatch, Todo.todoID, Todo.isFav)
+                                Todo.isFav?
+                                ToggleFav(dispatch,Todo.todoID,"favtodo",userId):
+                                ToggleFav(dispatch,Todo.todoID,"todo",userId)
                             }
                         }>
                             <Favorite
                                 color={Todo.isFav ? "warning" : ""}
                             />
-                        </IconButton>
-                        <IconButton aria-label="update todo" onClick={async () => {
-                            handleUpdateDialog()
-                            setSelectedTodo(GetTodoByID(Todo.todoID))
+                        </IconButton>}
+                        {!Todo.isFinished && <IconButton aria-label="update todo" onClick={() => {
+                            handleUpdateDialog(Todo.todoID)
+                            handleSelected(Todo.todoID)
                         }}>
-                            <Dialog dialog={updateTodoDialog} changeDialog={() => handleUpdateDialog()} dispatch={dispatch} type={true} userId={userId} data={selectedTodo} />
+                            <Dialog dialog={updateTodoDialog} changeDialog={() => handleUpdateDialog(Todo.todoID)} dispatch={dispatch} type={true} userId={userId} data={selectedTodo} />
                             <Edit />
-                        </IconButton>
-                        <IconButton aria-label="remove todo" onClick={() => RemoveTodo(dispatch, Todo.todoID)}>
+                        </IconButton>}
+                        <IconButton aria-label="remove todo" onClick={() => {
+                            Todo.isFinished ?
+                                RemoveTodo(dispatch, Todo.todoID, "finishedtodo") :
+                                Todo.isFav ?
+                                    RemoveTodo(dispatch, Todo.todoID, "favtodo") :
+                                    RemoveTodo(dispatch, Todo.todoID, "todo")
+                        }}>
                             <Delete />
                         </IconButton>
-
                     </CardActions>
                 }
                 title={Todo.title}
@@ -82,10 +110,12 @@ export default function TodoListCard({ userId, showFav, showFinished }) {
                 <Button
                     style={{
                         color: Todo.isFinished ? "green" : "red",
-                        textAlign: 'left',
 
                     }}
-                    onClick={() => ToggleFinished(dispatch, Todo.todoID, Todo.isFinished)}
+                    onClick={() => 
+                        Todo.isFinished?ToggleFinished(dispatch, Todo.todoID,"finishedtodo")
+                        :ToggleFinished(dispatch,Todo.todoID,"todo")
+                    }
                 >
                     {Todo.isFinished ? "Finished :)" : "Still working on"}
                 </Button>
@@ -145,13 +175,35 @@ export default function TodoListCard({ userId, showFav, showFinished }) {
         <Grid
             style={{ justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column', overflow: 'auto' }}
         >
-            <Grid style={{ overflow: 'auto', paddingLeft: 8, paddingRight: 8, height: '80vh' }} >
-                <FlatList
-                    list={showFav ? favoritedData : showFinished ? finishedData : data}
-                    renderItem={renderItem}
-
-                />
-            </Grid>
+            <Box sx={{ width: '75vw', typography: 'body1', height: '80vh', overflow: 'auto', justifyContent: 'center' }}>
+                <TabContext value={value}>
+                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                        <TabList onChange={handleChange} variant='fullWidth' centered >
+                            <Tab label="All Todos" value="1" />
+                            <Tab label="Favorited Todos" value="2" />
+                            <Tab label="Finished Todos" value="3" />
+                        </TabList>
+                    </Box>
+                    <TabPanel value="1">
+                        <FlatList
+                            list={data}
+                            renderItem={renderItem}
+                        />
+                    </TabPanel>
+                    <TabPanel value="2">
+                        <FlatList
+                            list={favoritedData}
+                            renderItem={renderItem}
+                        />
+                    </TabPanel>
+                    <TabPanel value="3">
+                        <FlatList
+                            list={finishedData}
+                            renderItem={renderItem}
+                        />
+                    </TabPanel>
+                </TabContext>
+            </Box>
         </Grid>
     );
 }

@@ -62,7 +62,7 @@ export default function TodoDialog({ dialog, changeDialog, dispatch, type, userI
                             }}
                             validationSchema={TodoValidation}
                             onSubmit={(values, { setSubmitting }) => {
-                                !type ? AddTodo(dispatch, values, userId) : UpdateTodo(dispatch, values, userId);
+                                !type ? AddTodo(dispatch, values, userId,"todo/addTodo") : UpdateTodo(dispatch, values, userId);
                                 changeDialog(false);
                                 setSubmitting(false);
                             }}
@@ -139,7 +139,6 @@ export default function TodoDialog({ dialog, changeDialog, dispatch, type, userI
                                             selectsRange
                                             isClearable
                                             popperPlacement="top-start"
-                                            showTimeSelect
                                             minDate={new Date()}
                                             dateFormat="MMMM d, yyyy h:mm aa"
                                             timeFormat="p"
