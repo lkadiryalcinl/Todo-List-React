@@ -113,7 +113,8 @@ export default function TodoListCard({ userId }) {
 
                     }}
                     onClick={() => 
-                        Todo.isFinished?ToggleFinished(dispatch, Todo.todoID,"finishedtodo")
+                        Todo.isFinished?
+                        ToggleFinished(dispatch, Todo.todoID,"finishedtodo")
                         :ToggleFinished(dispatch,Todo.todoID,"todo")
                     }
                 >

@@ -29,26 +29,12 @@ const todoReducer = (state = initialState, action) => {
         case 'ADD_FAV':
             return {
                 ...state,
-                data: [action.payload, ...state.data],
                 favoritedData: [action.payload, ...state.favoritedData]
-            }
-        case 'REMOVE_FAV':
-            return {
-                ...state,
-                data: [action.payload, ...state.data],
-                favoritedData: state.favoritedData.filter(element => element.todoID !== action.payload.todoID)
             }
         case 'ADD_FIN':
             return {
                 ...state,
-                data: state.data.filter(element => element.todoID !== action.payload.todoID),
                 finishedData: [action.payload, ...state.finishedData]
-            }
-        case 'REMOVE_FIN':
-            return {
-                ...state,
-                data: [action.payload, ...state.data],
-                finishedData: state.finishedData.filter(element => element.todoID !== action.payload.todoID)
             }
         case 'REMOVE_FROM_DATA':
             return {

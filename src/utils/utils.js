@@ -47,7 +47,7 @@ const AddTodoMongo = async (data, type) => {
     }
 }
 
-const AddTodo = async (dispatch, data, userID, type) => {
+const AddTodo = async (dispatch, data, userID) => {
     let dateStart = new Date(data.date?.dateStart)
     let dateEnd = new Date(data.date?.dateEnd)
 
@@ -64,7 +64,7 @@ const AddTodo = async (dispatch, data, userID, type) => {
     }
 
     try {
-        const response = await fetch(`https://localhost:44389/api/${type}`, {
+        const response = await fetch(`https://localhost:44389/api/todo/addTodo`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -106,14 +106,15 @@ const ToggleFav = async (dispatch, TodoID, type) => {
         const data = await response.json();
 
         if (response.ok) {
-            dispatch({ type: 'REMOVE_FROM_DATA', payload: data })
             if (type === "favtodo") {
-                dispatch({ type: 'REMOVE_FAV', payload: data })
+                dispatch({ type: 'REMOVE_FROM_FAV_DATA', payload: data })
+                dispatch({ type: 'ADD_TODO', payload: data })
                 RemoveTodo(dispatch, TodoID, "favtodo")
                 ToggleFavMS(TodoID)
             }
             else if (type === "todo") {
                 dispatch({ type: 'ADD_FAV', payload: data })
+                dispatch({ type: 'ADD_TODO', payload: data })                
                 AddTodoMongo(data, "favtodo")
             }
         } else {
@@ -143,7 +144,8 @@ const ToggleFavMS = async (TodoID) => {
     }
 }
 
-const ToggleFinished = async (dispatch, TodoID, isFinished, type) => {
+const ToggleFinished = async (dispatch, TodoID, type) => {
+    console.log(type);
     const body = {
         todoID: TodoID,
     };
@@ -159,15 +161,17 @@ const ToggleFinished = async (dispatch, TodoID, isFinished, type) => {
         const data = await response.json()
 
         if (response.ok) {
+            dispatch({ type: 'REMOVE_FROM_DATA', payload: data })
             if (type === "todo") {
                 dispatch({ type: 'ADD_FIN', payload: data })
+                dispatch({ type: 'ADD_TODO', payload: data })
                 RemoveTodo(dispatch, data.todoID, "todo")
                 AddTodoMongo(data, "finishedtodo")
             }
             else if (type === "finishedtodo") {
-                dispatch({ type: 'REMOVE_FIN', payload: data })
+                dispatch({ type: 'REMOVE_FROM_FIN_DATA', payload: data })
                 RemoveTodo(dispatch, data.todoID, "finishedtodo")
-                AddTodo(dispatch, data, data.userID, "todo/addTodo")
+                AddTodo(dispatch, data, data.userID)
             }
         } else {
             console.error('Toggle Fav Failed:', response.status, response.statusText);
