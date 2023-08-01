@@ -106,15 +106,15 @@ const ToggleFav = async (dispatch, TodoID, type) => {
         const data = await response.json();
 
         if (response.ok) {
+            dispatch({ type: 'REMOVE_FROM_DATA', payload: data })
             if (type === "favtodo") {
                 dispatch({ type: 'REMOVE_FROM_FAV_DATA', payload: data })
-                dispatch({ type: 'ADD_TODO', payload: data })
                 RemoveTodo(dispatch, TodoID, "favtodo")
                 ToggleFavMS(TodoID)
             }
             else if (type === "todo") {
+                dispatch({ type: 'ADD_TODO', payload: data })            
                 dispatch({ type: 'ADD_FAV', payload: data })
-                dispatch({ type: 'ADD_TODO', payload: data })                
                 AddTodoMongo(data, "favtodo")
             }
         } else {

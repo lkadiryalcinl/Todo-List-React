@@ -68,9 +68,9 @@ export default function TodoListCard({ userId }) {
                     <CardActions>
                         {!Todo.isFinished && <IconButton aria-label="add to favorites" onClick={
                             () => {
-                                Todo.isFav?
-                                ToggleFav(dispatch,Todo.todoID,"favtodo",userId):
-                                ToggleFav(dispatch,Todo.todoID,"todo",userId)
+                                Todo.isFav ?
+                                    ToggleFav(dispatch, Todo.todoID, "favtodo", userId) :
+                                    ToggleFav(dispatch, Todo.todoID, "todo", userId)
                             }
                         }>
                             <Favorite
@@ -112,10 +112,10 @@ export default function TodoListCard({ userId }) {
                         color: Todo.isFinished ? "green" : "red",
 
                     }}
-                    onClick={() => 
-                        Todo.isFinished?
-                        ToggleFinished(dispatch, Todo.todoID,"finishedtodo")
-                        :ToggleFinished(dispatch,Todo.todoID,"todo")
+                    onClick={() =>
+                        Todo.isFinished ?
+                            ToggleFinished(dispatch, Todo.todoID, "finishedtodo")
+                            : ToggleFinished(dispatch, Todo.todoID, "todo")
                     }
                 >
                     {Todo.isFinished ? "Finished :)" : "Still working on"}
@@ -140,35 +140,51 @@ export default function TodoListCard({ userId }) {
                 </Typography>
             </CardContent>
             <CardContent>
-                {
-                    !((new Date(Todo.dateEnd).getTime() - new Date(Todo.dateStart).getTime()) / (1000 * 3600 * 24) === 0) ?
-                        <Typography
-                            variant="body2"
-                            bgcolor={
-                                (new Date(Todo.dateEnd).getTime() - new Date(Todo.dateStart).getTime()) / (1000 * 3600 * 24) <= 1 ? "red"
-                                    : (new Date(Todo.dateEnd).getTime() - new Date(Todo.dateStart).getTime()) / (1000 * 3600 * 24) > 1
-                                        && (new Date(Todo.dateEnd).getTime() - new Date(Todo.dateStart).getTime()) / (1000 * 3600 * 24) < 4
-                                        ? "#F5A623"
-                                        : "green"}
-                            color={'white'}
-                            textAlign={'center'}
-                            padding={1}
-                            borderRadius={20}
-                            flexWrap={'wrap'}
-                        >
-                            {(new Date(Todo.dateEnd).getTime() - new Date(Todo.dateStart).getTime()) / (1000 * 3600 * 24)} Day Remain
-                        </Typography>
-                        : <Typography
-                            variant="body2"
-                            bgcolor={"red"}
-                            color={'white'}
-                            textAlign={'center'}
-                            padding={1}
-                            borderRadius={20}
-                        >
-                            Today must finished
-                        </Typography>
-                }
+                {new Date() < new Date(Todo.dateStart) ? (
+                    <Typography
+                        variant="body2"
+                        bgcolor={"green"}
+                        color={"white"}
+                        textAlign={"center"}
+                        padding={1}
+                        borderRadius={20}
+                    >
+                        {Math.round((new Date(Todo.dateStart).getTime() - new Date().getTime()) / (1000 * 3600 * 24))} Day Left To Start Todo
+                    </Typography>
+                ) : new Date() > new Date(Todo.dateEnd) ? (
+                    <Typography
+                        variant="body2"
+                        bgcolor={"red"}
+                        color={"white"}
+                        textAlign={"center"}
+                        padding={1}
+                        borderRadius={20}
+                    >
+                        Todo is already finished
+                    </Typography>
+                ) : (
+                    <Typography
+                        variant="body2"
+                        bgcolor={
+                            Math.round((new Date(Todo.dateEnd).getTime() - new Date().getTime()) / (1000 * 3600 * 24)) <= 1
+                                ? "red"
+                                : Math.round((new Date(Todo.dateEnd).getTime() - new Date().getTime()) / (1000 * 3600 * 24)) < 4
+                                    ? "#F5A623"
+                                    : "green"
+                        }
+                        color={"white"}
+                        textAlign={"center"}
+                        padding={1}
+                        borderRadius={20}
+                        flexWrap={"wrap"}
+                    >
+                        {Math.round((new Date(Todo.dateEnd).getTime() - new Date().getTime()) / (1000 * 3600 * 24))} Day Remain - 
+                        It will end {[new Date(Todo.dateEnd).getDate(),
+                        new Date(Todo.dateEnd).getMonth() + 1,
+                        new Date(Todo.dateEnd).getFullYear()]
+                            .join('/')}
+                    </Typography>
+                )}
             </CardContent>
         </Card >
 
