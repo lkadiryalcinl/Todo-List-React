@@ -33,15 +33,15 @@ const TodoValidation = Yup.object().shape({
         .min(4, 'Too Short!')
         .max(50, 'Too Long!')
         .required('Required'),
-    desc: Yup.string()
+    description: Yup.string()
         .min(4, 'Too Short!')
         .max(50, 'Too Long!')
         .required('Required'),
     date: Yup.object().shape({
-        dateStart:Yup.date()
-        .required('Required'),
+        dateStart: Yup.date()
+            .required('Required'),
         dateEnd: Yup.date()
-        .required('Required')
+            .required('Required')
     })
 
 })

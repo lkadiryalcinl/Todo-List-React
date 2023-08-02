@@ -1,12 +1,12 @@
 import * as React from 'react'
 import Navbar from '../components/Navbar'
-import { Button, Grid, IconButton } from '@mui/material';
+import { Grid, IconButton } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import TodoListCard from '../components/TodoListCard';
 import Dialog from '../components/Dialog'
 import { useDispatch } from "react-redux";
 import { useLocation } from 'react-router-dom'
-import { FetchData} from '../utils/utils';
+import { FetchData } from '../utils/utils';
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -15,9 +15,9 @@ const Home = () => {
     const [AddTodoDialog, setAddTodoDialog] = React.useState(false);
 
     React.useEffect(() => {
-        FetchData(dispatch, userId,"todo?UserId=");
-        FetchData(dispatch,userId,"favtodo/elements/");
-        FetchData(dispatch,userId,"finishedtodo/elements/");
+        FetchData(dispatch, userId, "todo?UserId=");
+        FetchData(dispatch, userId, "favtodo/elements/");
+        FetchData(dispatch, userId, "finishedtodo/elements/");
     }, [])
 
     const handleAddDialog = () => {
@@ -50,8 +50,8 @@ const Home = () => {
                             color: 'white'
                         }}
                     />
-                    <Dialog dialog={AddTodoDialog} changeDialog={() => handleAddDialog()} dispatch={dispatch} type={false} userId={userId} />
                 </IconButton>
+                <Dialog dialog={AddTodoDialog} changeDialog={() => handleAddDialog()} dispatch={dispatch} type={false} userId={userId} />
             </Grid>
             <TodoListCard userId={userId} />
         </Grid>

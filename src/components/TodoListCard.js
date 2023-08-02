@@ -3,7 +3,7 @@ import * as React from 'react';
 import {
     Edit,
     Delete,
-    Favorite,
+    Bookmark
 } from '@mui/icons-material';
 
 import {
@@ -38,25 +38,21 @@ export default function TodoListCard({ userId }) {
     const finishedData = useSelector(state => state.todo.finishedData)
 
     const [updateTodoDialog, setUpdateTodoDialog] = React.useState(false);
-    const [selectedTodo, setSelectedTodo] = React.useState(null)
+    const [selectedTodo, setSelectedTodo] = React.useState(null);
     const [value, setValue] = React.useState('1');
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
-    const handleUpdateDialog = (todoID) => {
-        console.log("todo: " + todoID);
-        console.log("selected" + selectedTodo);
-        if (todoID === selectedTodo?.todoID)
+    const handleUpdateDialog = async (todoID) => {
+        todoID !== undefined ? await GetTodoByID(todoID, "todo").then((data) => {
+            setSelectedTodo(data)
+        }).then(() => {
             setUpdateTodoDialog(true)
+        }) :
+            setUpdateTodoDialog(false)
     }
-    const handleSelected = async (todoID) => {
-        const selectedData = await GetTodoByID(todoID, "todo/");
-
-        setSelectedTodo(selectedData.todoID);
-    }
-
 
     const renderItem = (Todo) =>
         <Card
@@ -73,15 +69,14 @@ export default function TodoListCard({ userId }) {
                                     ToggleFav(dispatch, Todo.todoID, "todo", userId)
                             }
                         }>
-                            <Favorite
+                            <Bookmark
                                 color={Todo.isFav ? "warning" : ""}
                             />
                         </IconButton>}
                         {!Todo.isFinished && <IconButton aria-label="update todo" onClick={() => {
                             handleUpdateDialog(Todo.todoID)
-                            handleSelected(Todo.todoID)
                         }}>
-                            <Dialog dialog={updateTodoDialog} changeDialog={() => handleUpdateDialog(Todo.todoID)} dispatch={dispatch} type={true} userId={userId} data={selectedTodo} />
+
                             <Edit />
                         </IconButton>}
                         <IconButton aria-label="remove todo" onClick={() => {
@@ -115,8 +110,9 @@ export default function TodoListCard({ userId }) {
                     //Todo ile finished todo arasındaki mantığı - favtodo ile finished todo arasında da kur
                     onClick={() =>
                         Todo.isFinished ?
-                            ToggleFinished(dispatch, Todo.todoID, "finishedtodo")
-                            : ToggleFinished(dispatch, Todo.todoID, "todo")
+                            ToggleFinished(dispatch, Todo.todoID, "finishedtodo", Todo.isFav)
+                            : ToggleFinished(dispatch, Todo.todoID, "todo", Todo.isFav)
+
                     }
                 >
                     {Todo.isFinished ? "Finished :)" : "Still working on"}
@@ -179,7 +175,7 @@ export default function TodoListCard({ userId }) {
                         borderRadius={20}
                         flexWrap={"wrap"}
                     >
-                        {Math.round((new Date(Todo.dateEnd).getTime() - new Date().getTime()) / (1000 * 3600 * 24))} Day Remain - 
+                        {Math.round((new Date(Todo.dateEnd).getTime() - new Date().getTime()) / (1000 * 3600 * 24))} Day Remain -
                         It will end {[new Date(Todo.dateEnd).getDate(),
                         new Date(Todo.dateEnd).getMonth() + 1,
                         new Date(Todo.dateEnd).getFullYear()]
@@ -198,7 +194,7 @@ export default function TodoListCard({ userId }) {
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         <TabList onChange={handleChange} variant='fullWidth' centered >
                             <Tab label="All Todos" value="1" />
-                            <Tab label="Favorited Todos" value="2" />
+                            <Tab label="Marked Todos" value="2" />
                             <Tab label="Finished Todos" value="3" />
                         </TabList>
                     </Box>
@@ -222,6 +218,14 @@ export default function TodoListCard({ userId }) {
                     </TabPanel>
                 </TabContext>
             </Box>
+            <Dialog
+                dialog={updateTodoDialog}
+                changeDialog={() => handleUpdateDialog()}
+                dispatch={dispatch}
+                type={true}
+                userId={userId}
+                data={selectedTodo}
+            />
         </Grid>
     );
 }

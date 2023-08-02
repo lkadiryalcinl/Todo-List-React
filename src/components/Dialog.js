@@ -54,15 +54,15 @@ export default function TodoDialog({ dialog, changeDialog, dispatch, type, userI
                             initialValues={{
                                 title: !type ? "" : data?.title,
                                 priorityType: !type ? "" : data?.priorityType,
-                                desc: !type ? "" : data?.description,
+                                description: !type ? "" : data?.description,
                                 date: {
-                                    dateStart: null,
-                                    dateEnd: null
+                                    dateStart: !type ? null : new Date(data?.dateStart),
+                                    dateEnd: !type ? null : new Date(data?.dateEnd)
                                 },
                             }}
                             validationSchema={TodoValidation}
                             onSubmit={(values, { setSubmitting }) => {
-                                !type ? AddTodo(dispatch, values, userId,"todo/addTodo") : UpdateTodo(dispatch, values, userId);
+                                !type ? AddTodo(dispatch, values, userId, "todo/addTodo") : UpdateTodo(dispatch, values, data, "todo");
                                 changeDialog(false);
                                 setSubmitting(false);
                             }}
@@ -91,16 +91,16 @@ export default function TodoDialog({ dialog, changeDialog, dispatch, type, userI
                                     {errors.title && touched.title && <div>{errors.title}</div>}
 
                                     <TextField
-                                        color={errors.desc && values.desc.length !== 0 ? "error" : ""}
-                                        label={errors.desc && values.desc.length !== 0 ? errors.desc : 'Description'}
+                                        color={errors.description && values.description.length !== 0 ? "error" : ""}
+                                        label={errors.description && values.description.length !== 0 ? errors.description : 'Description'}
                                         type="text"
-                                        name="desc" // Corrected name attribute
+                                        name="description" // Corrected name attribute
                                         onChange={handleChange} // Corrected handleChange
                                         onBlur={handleBlur}
-                                        value={values.desc}
+                                        value={values.description}
                                         style={{ marginBottom: '1rem', marginTop: '1rem' }}
                                     />
-                                    {errors.desc && touched.desc && <div>{errors.desc}</div>}
+                                    {errors.description && touched.description && <div>{errors.description}</div>}
                                     <FormControl>
 
                                         <InputLabel id="demo-multiple-name-label">Priority Type</InputLabel>
@@ -147,6 +147,9 @@ export default function TodoDialog({ dialog, changeDialog, dispatch, type, userI
                                             allowSameDay
                                             calendarStartDay={1}
                                             inline
+                                            showMonthDropdown
+                                            showYearDropdown
+                                            dropdownMode="select"
                                         />
                                     </Grid>
                                     <IconButton type="submit" disabled={isSubmitting} onClick={handleSubmit}>
