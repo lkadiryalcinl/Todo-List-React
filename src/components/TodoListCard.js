@@ -112,6 +112,7 @@ export default function TodoListCard({ userId }) {
                         color: Todo.isFinished ? "green" : "red",
 
                     }}
+                    //Todo ile finished todo arasındaki mantığı - favtodo ile finished todo arasında da kur
                     onClick={() =>
                         Todo.isFinished ?
                             ToggleFinished(dispatch, Todo.todoID, "finishedtodo")
