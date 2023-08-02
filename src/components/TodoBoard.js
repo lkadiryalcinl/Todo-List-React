@@ -29,8 +29,9 @@ import { GetTodoByID, RemoveTodo, ToggleFav, ToggleFinished } from '../utils/uti
 import { useDispatch, useSelector } from 'react-redux';
 import Dialog from './Dialog'
 import FlatList from 'flatlist-react'
+import EmptyListPlaceHolder from './EmptyListPlaceHolder';
 
-export default function TodoListCard({ userId }) {
+export default function TodoBoard({ userId }) {
     const dispatch = useDispatch();
 
     const data = useSelector(state => state.todo.data)
@@ -56,7 +57,7 @@ export default function TodoListCard({ userId }) {
 
     const renderItem = (Todo) =>
         <Card
-            sx={{ marginBottom: 2, boxShadow: 8, width: '70vw' }}
+            sx={{ marginBottom: 2, boxShadow: 8 }}
             key={Todo.todoID}
         >
             <CardHeader
@@ -112,7 +113,6 @@ export default function TodoListCard({ userId }) {
                         Todo.isFinished ?
                             ToggleFinished(dispatch, Todo.todoID, "finishedtodo", Todo.isFav)
                             : ToggleFinished(dispatch, Todo.todoID, "todo", Todo.isFav)
-
                     }
                 >
                     {Todo.isFinished ? "Finished :)" : "Still working on"}
@@ -157,7 +157,7 @@ export default function TodoListCard({ userId }) {
                         padding={1}
                         borderRadius={20}
                     >
-                        Todo is already finished
+                        Today Must Finished
                     </Typography>
                 ) : (
                     <Typography
@@ -175,7 +175,7 @@ export default function TodoListCard({ userId }) {
                         borderRadius={20}
                         flexWrap={"wrap"}
                     >
-                        {Math.round((new Date(Todo.dateEnd).getTime() - new Date().getTime()) / (1000 * 3600 * 24))} Day Remain -
+                        {Math.round((new Date(Todo.dateEnd).getTime() - new Date().getTime()) / (1000 * 3600 * 24))} Day Remained -
                         It will end {[new Date(Todo.dateEnd).getDate(),
                         new Date(Todo.dateEnd).getMonth() + 1,
                         new Date(Todo.dateEnd).getFullYear()]
@@ -187,45 +187,50 @@ export default function TodoListCard({ userId }) {
 
     return (
         <Grid
-            style={{ justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column', overflow: 'auto' }}
+            style={{ justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column' }}
         >
-            <Box sx={{ width: '75vw', typography: 'body1', height: '80vh', overflow: 'auto', justifyContent: 'center' }}>
-                <TabContext value={value}>
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <TabList onChange={handleChange} variant='fullWidth' centered >
-                            <Tab label="All Todos" value="1" />
-                            <Tab label="Marked Todos" value="2" />
-                            <Tab label="Finished Todos" value="3" />
-                        </TabList>
-                    </Box>
-                    <TabPanel value="1">
-                        <FlatList
-                            list={data}
-                            renderItem={renderItem}
-                        />
-                    </TabPanel>
-                    <TabPanel value="2">
-                        <FlatList
-                            list={favoritedData}
-                            renderItem={renderItem}
-                        />
-                    </TabPanel>
-                    <TabPanel value="3">
-                        <FlatList
-                            list={finishedData}
-                            renderItem={renderItem}
-                        />
-                    </TabPanel>
-                </TabContext>
-            </Box>
-            <Dialog
-                dialog={updateTodoDialog}
-                changeDialog={() => handleUpdateDialog()}
-                dispatch={dispatch}
-                type={true}
-                userId={userId}
-                data={selectedTodo}
-            />
+            <Grid style={{overflow:'auto',height:'80vh'}}>
+                <Box sx={{ width: '90vw', typography: 'body1', justifyContent: 'center' }}>
+                    <TabContext value={value} >
+                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                            <TabList onChange={handleChange} variant='fullWidth' centered >
+                                <Tab label="All Todos" value="1" />
+                                <Tab label="Marked Todos" value="2" />
+                                <Tab label="Finished Todos" value="3" />
+                            </TabList>
+                        </Box>
+                        <TabPanel value="1">
+                            <FlatList
+                                list={data}
+                                renderItem={renderItem}
+                                renderWhenEmpty={() => <div style={{color:'white',textAlign:'center'}}>This List is Empty...</div>}
+                            />
+                        </TabPanel>
+                        <TabPanel value="2">
+                            <FlatList
+                                list={favoritedData}
+                                renderItem={renderItem}
+                                renderWhenEmpty={() => <div style={{color:'white',textAlign:'center'}}>This List is Empty...</div>}
+                            />
+                        </TabPanel>
+                        <TabPanel value="3">
+                            <FlatList
+                                list={finishedData}
+                                renderItem={renderItem}
+                                renderWhenEmpty={() => <div style={{color:'white',textAlign:'center'}}>This List is Empty...</div>}
+                            />
+                        </TabPanel>
+                    </TabContext>
+                </Box>
+                <Dialog
+                    dialog={updateTodoDialog}
+                    changeDialog={() => handleUpdateDialog()}
+                    dispatch={dispatch}
+                    type={true}
+                    userId={userId}
+                    data={selectedTodo}
+                />
+            </Grid>
         </Grid>
     );
 }

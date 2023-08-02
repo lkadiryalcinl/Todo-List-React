@@ -2,7 +2,7 @@ import * as React from 'react'
 import Navbar from '../components/Navbar'
 import { Grid, IconButton } from '@mui/material';
 import { Add } from '@mui/icons-material';
-import TodoListCard from '../components/TodoListCard';
+import TodoBoard from '../components/TodoBoard';
 import Dialog from '../components/Dialog'
 import { useDispatch } from "react-redux";
 import { useLocation } from 'react-router-dom'
@@ -34,7 +34,6 @@ const Home = () => {
         }}>
             <Navbar />
             <Grid
-                marginY={2}
                 style={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -42,7 +41,7 @@ const Home = () => {
                     alignItems: 'center',
                 }}
             >
-                <IconButton style={{ backgroundColor: '#F5A623' }}>
+                <IconButton style={{ backgroundColor: '#F5A623' }} sx={{marginY:2}}>
                     <Add onClick={() => {
                         handleAddDialog()
                     }}
@@ -51,9 +50,9 @@ const Home = () => {
                         }}
                     />
                 </IconButton>
-                <Dialog dialog={AddTodoDialog} changeDialog={() => handleAddDialog()} dispatch={dispatch} type={false} userId={userId} />
+            <Dialog dialog={AddTodoDialog} changeDialog={() => handleAddDialog()} dispatch={dispatch} type={false} userId={userId} />
             </Grid>
-            <TodoListCard userId={userId} />
+            <TodoBoard userId={userId} />
         </Grid>
     )
 }
