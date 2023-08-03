@@ -7,22 +7,17 @@ import { HandleAuth } from '../utils/utils';
 import { Lock } from '@mui/icons-material';
 import { LoginSchema } from '../validation/validation';
 
+import './Login.css'
+
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [alert, setAlert] = React.useState(false);
+
+
   return (
-    <Grid style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: '100vh',
-      width: '100vw',
-      backgroundImage: 'url("https://img.freepik.com/premium-vector/orange-light-geometric-background_9111-1311.jpg")',
-      backgroundSize: 'cover',
-      flexDirection: 'column',
-    }}
-    >
+
+    <Grid className='login-page-container'>
       {alert &&
         <Alert
           severity="error"
@@ -60,18 +55,7 @@ const Login = () => {
               flexDirection: 'column',
             }}
           >
-            <Grid
-              style={{
-                height: '10vh',
-                width: '30vw',
-                backgroundColor: '#F5A623',
-                display: 'flex',
-                borderTopLeftRadius: 20,
-                borderTopRightRadius: 20,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
+            <Grid className='form-header-container'>
               <Typography
                 variant='h5'
                 color={'white'}
@@ -79,29 +63,12 @@ const Login = () => {
                 To-do List Login Page
               </Typography>
             </Grid>
-            <Grid style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'space-evenly',
-              padding: 8,
-              border: '4px solid orange',
-              borderBottomLeftRadius: 20,
-              borderBottomRightRadius: 20,
-              backgroundColor: 'whitesmoke'
-            }}
+            <Grid
+              className='form-content-container'
               container
-              height={'50vh'}
-              maxWidth={'30vw'}
             >
               <Grid
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
+                className='form-style'>
                 <Lock
                   sx={{
                     marginY: 2
@@ -114,14 +81,9 @@ const Login = () => {
                   Welcome
                 </Typography>
               </Grid>
-              <Grid style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
+              <Grid className='form-style'>
                 <TextField
-                  color={errors.username && values.username.length !== 0 ? "error" : ""}
+                  color={errors.username && values.username.length !== 0 ? "error" : "warning"}
                   label={errors.username && values.username.length !== 0 ? errors.username : 'Username'}
                   type="text"
                   name="username"
@@ -131,7 +93,7 @@ const Login = () => {
                 />
 
                 <TextField
-                  color={errors.password && values.password.length !== 0 ? "error" : ""}
+                  color={errors.password && values.password.length !== 0 ? "error" : "warning"}
                   label={errors.password && values.password.length !== 0 ? errors.password : 'Password'}
                   type="password"
                   name="password"
@@ -145,12 +107,7 @@ const Login = () => {
                   type="submit"
                   disabled={isSubmitting}
                   onClick={handleSubmit}
-                  style={{
-                    marginTop: 16,
-                    color: 'white',
-                    backgroundColor: '#F5A623'
-                  }}
-
+                  className='form-button'
                 >
                   Submit
                 </Button>

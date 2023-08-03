@@ -1,0 +1,87 @@
+.tab_item_style {
+    color: black !important;
+    background-color: #ED6C02;
+    font-size: large !important;
+    
+}
+
+.css-1aquho2-MuiTabs-indicator {
+    background-color: #ED6C02 !important;
+}
+
+.radio-text {
+    color: black !important;
+}
+
+.radio-text-title {
+    font-size: larger !important;
+}
+
+.filter-card-container {
+    display: flex;
+    width: 15vw;
+    height: auto;
+    background-color: white;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+}
+
+.todo-board-container {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.todo-board-filter-container {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    width: 20vw !important;
+    height: 70vh !important;
+}
+
+.filter-card-button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.filter-card-button {
+    background-color: #ED6C02 !important;
+    color: white !important;
+    border-radius: 20px !important;
+    width: 10vw;
+}
+
+.todo-card-container {
+    margin-top: 2;
+    box-shadow: 8;
+    border-radius: 20;
+}
+
+.card-info-container {
+    display: block;
+    width: 90vw;
+}
+
+.react-datepicker__header {
+    background-color: #ED6C02 !important;
+}
+
+.react-datepicker__day-name{
+    color: white !important;
+}
+
+.react-datepicker__current-month,.react-datepicker__current-month--hasYearDropdown,.react-datepicker__current-month--hasMonthDropdown {
+    color: white !important;
+    margin-bottom: 4px;
+}
+
+.react-datepicker__navigation,.react-datepicker__navigation--next {
+    color: white !important;
+}

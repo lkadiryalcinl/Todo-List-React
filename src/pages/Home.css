@@ -1,0 +1,6 @@
+.home-page-container {
+    height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    background-color: #ffdfc4 !important;
+}

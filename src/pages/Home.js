@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 import { useLocation } from 'react-router-dom'
 import { FetchData } from '../utils/utils';
 
+import './Home.css'
+
 const Home = () => {
     const dispatch = useDispatch();
     const location = useLocation()
@@ -25,13 +27,7 @@ const Home = () => {
     }
 
     return (
-        <Grid style={{
-            backgroundImage: 'url("https://img.freepik.com/premium-vector/orange-light-geometric-background_9111-1311.jpg")',
-            backgroundSize: 'cover',
-            height: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-        }}>
+        <Grid className='home-page-container'>
             <Navbar />
             <Grid
                 style={{
@@ -41,7 +37,7 @@ const Home = () => {
                     alignItems: 'center',
                 }}
             >
-                <IconButton style={{ backgroundColor: '#F5A623' }} sx={{marginY:2}}>
+                <IconButton style={{ backgroundColor: '#ED6C02' }} sx={{ marginY: 2 }}>
                     <Add onClick={() => {
                         handleAddDialog()
                     }}
@@ -50,7 +46,7 @@ const Home = () => {
                         }}
                     />
                 </IconButton>
-            <Dialog dialog={AddTodoDialog} changeDialog={() => handleAddDialog()} dispatch={dispatch} type={false} userId={userId} />
+                <Dialog dialog={AddTodoDialog} changeDialog={() => handleAddDialog()} dispatch={dispatch} type={false} userId={userId} />
             </Grid>
             <TodoBoard userId={userId} />
         </Grid>

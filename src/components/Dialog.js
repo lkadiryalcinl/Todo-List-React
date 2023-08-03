@@ -150,6 +150,7 @@ export default function TodoDialog({ dialog, changeDialog, dispatch, type, userI
                                             showMonthDropdown
                                             showYearDropdown
                                             dropdownMode="select"
+                                            className=''
                                         />
                                     </Grid>
                                     <IconButton type="submit" disabled={isSubmitting} onClick={handleSubmit}>

@@ -7,20 +7,14 @@ import { Formik } from 'formik';
 import { Lock } from '@mui/icons-material';
 import { SignUpSchema } from '../validation/validation';
 
+import './CreateAccount.css'
+
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   return (
-    <Grid style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: '100vh',
-      width: '100vw',
-      backgroundImage: 'url("https://img.freepik.com/premium-vector/orange-light-geometric-background_9111-1311.jpg")',
-      backgroundSize: 'cover'
-    }}>
+    <Grid className='create-account-page-container'>
       <Formik
         initialValues={{
           username: "",
@@ -49,18 +43,7 @@ const Login = () => {
               flexDirection: 'column',
             }}
           >
-            <Grid
-              style={{
-                height: '10vh',
-                width: '30vw',
-                backgroundColor: '#F5A623',
-                display: 'flex',
-                borderTopLeftRadius: 20,
-                borderTopRightRadius: 20,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
+            <Grid className='form-header-container'>
               <Typography
                 variant='h5'
                 color={'white'}
@@ -68,29 +51,11 @@ const Login = () => {
                 To-do List Login Page
               </Typography>
             </Grid>
-            <Grid style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'space-evenly',
-              padding: 8,
-              border: '4px solid orange',
-              borderBottomLeftRadius: 20,
-              borderBottomRightRadius: 20,
-              backgroundColor: 'whitesmoke'
-            }}
+            <Grid 
+              className='form-content-container'
               container
-              height={'70vh'}
-              width={'30vw'}
             >
-              <Grid
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
+              <Grid className='form-style'>
                 <Lock
                   sx={{
                     marginY: 2
@@ -103,14 +68,9 @@ const Login = () => {
                   Create Account
                 </Typography>
               </Grid>
-              <Grid style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
+              <Grid className='form-style'>
                 <TextField
-                  color={errors.username && values.username.length !== 0 ? "error" : ""}
+                  color={errors.username && values.username.length !== 0 ? "error" : "warning"}
                   label={errors.username && values.username.length !== 0 ? errors.username : 'Username'}
                   type="text"
                   name="username"
@@ -120,7 +80,7 @@ const Login = () => {
                 />
 
                 <TextField
-                  color={errors.email && values.email.length !== 0 ? "error" : ""}
+                  color={errors.email && values.email.length !== 0 ? "error" : "warning"}
                   label={errors.email && values.email.length !== 0 ? errors.email : 'E-mail'}
                   type="text"
                   name="email"
@@ -131,7 +91,7 @@ const Login = () => {
                 />
 
                 <TextField
-                  color={errors.password && values.password.length !== 0 ? "error" : ""}
+                  color={errors.password && values.password.length !== 0 ? "error" : "warning"}
                   label={errors.password && values.password.length !== 0 ? errors.password : 'Password'}
                   type="password"
                   name="password"
@@ -142,7 +102,7 @@ const Login = () => {
                 />
 
                 <TextField
-                  color={errors.repass && values.repass.length !== 0 ? "error" : ""}
+                  color={errors.repass && values.repass.length !== 0 ? "error" : "warning"}
                   label={errors.repass && values.repass.length !== 0 ? errors.repass : 'Password Again'}
                   type="password"
                   name="repass"
@@ -156,12 +116,8 @@ const Login = () => {
                   type="submit"
                   disabled={isSubmitting}
                   onClick={handleSubmit}
-                  style={{
-                    marginTop: 16,
-                    color: 'white',
-                    backgroundColor: '#F5A623'
-                  }}
-                >
+                  className='form-button'
+                  >
                   Submit
                 </Button>
               </Grid>
