@@ -39,7 +39,6 @@ import { GetTodoByID, RemoveTodo, ToggleFav, ToggleFinished } from '../utils/uti
 import { useDispatch, useSelector } from 'react-redux';
 import Dialog from './Dialog'
 import FlatList from 'flatlist-react'
-import TodoAlert from '../components/TodoAlert'
 
 export default function TodoBoard({ userId }) {
     const dispatch = useDispatch();
@@ -53,6 +52,7 @@ export default function TodoBoard({ userId }) {
     const [tabValue, setTabValue] = React.useState('1');
     const [radioSortValue, setRadioSortValue] = React.useState('title');
     const [radioOrderValue, setRadioOrderValue] = React.useState('asc');
+    const [columnWidth, setColumnWidth] = React.useState('40vw')
 
     const handleRadioSortValue = (event) => {
         setRadioSortValue(event.target.value);
@@ -104,7 +104,7 @@ export default function TodoBoard({ userId }) {
                     >
                         <FormControlLabel
                             value="title"
-                            control={<Radio 
+                            control={<Radio
                                 color='warning'
                             />}
                             label="Title"
@@ -113,7 +113,7 @@ export default function TodoBoard({ userId }) {
                         />
                         <FormControlLabel
                             value="deadline"
-                            control={<Radio 
+                            control={<Radio
                                 color='warning'
                             />}
                             label="Deadline"
@@ -122,7 +122,7 @@ export default function TodoBoard({ userId }) {
                         />
                         <FormControlLabel
                             value="priority"
-                            control={<Radio 
+                            control={<Radio
                                 color='warning'
                             />}
                             label="Priority"
@@ -131,7 +131,7 @@ export default function TodoBoard({ userId }) {
                         />
                         <FormControlLabel
                             value="createdDate"
-                            control={<Radio 
+                            control={<Radio
                                 color='warning'
                             />}
                             label="Created Date"
@@ -168,7 +168,7 @@ export default function TodoBoard({ userId }) {
                     >
                         <FormControlLabel
                             value="asc"
-                            control={<Radio 
+                            control={<Radio
                                 color='warning'
                             />}
                             label="Ascending"
@@ -177,7 +177,7 @@ export default function TodoBoard({ userId }) {
                         />
                         <FormControlLabel
                             value="desc"
-                            control={<Radio 
+                            control={<Radio
                                 color='warning'
                             />}
                             label="Descending"
@@ -278,6 +278,18 @@ export default function TodoBoard({ userId }) {
     return (
         <Grid className='todo-board-container'>
             <Grid className='todo-board-filter-container'>
+                <Grid className='view-control-container'>
+                    <IconButton color={columnWidth === "40vw" ? 'warning' : 'default'} onClick={() => {
+                        setColumnWidth('40vw')
+                    }}>
+                        <ViewHeadlineOutlined />
+                    </IconButton>
+                    <IconButton color={columnWidth === "30vw" ? 'warning' : 'default'} onClick={() => {
+                        setColumnWidth('30vw')
+                    }}>
+                        <GridViewOutlined />
+                    </IconButton>
+                </Grid>
                 <SortCard
 
                 />
@@ -308,6 +320,8 @@ export default function TodoBoard({ userId }) {
                                 renderItem={renderItem}
                                 renderWhenEmpty={renderWhenEmpty}
                                 renderOnScroll
+                                displayGrid
+                                minColumnWidth={columnWidth}
 
                             />
                         </TabPanel>
@@ -317,6 +331,8 @@ export default function TodoBoard({ userId }) {
                                 renderItem={renderItem}
                                 renderWhenEmpty={renderWhenEmpty}
                                 renderOnScroll
+                                displayGrid
+                                minColumnWidth={columnWidth}
                             />
                         </TabPanel>
                         <TabPanel value="3">
@@ -325,6 +341,8 @@ export default function TodoBoard({ userId }) {
                                 renderItem={renderItem}
                                 renderWhenEmpty={renderWhenEmpty}
                                 renderOnScroll
+                                displayGrid
+                                minColumnWidth={columnWidth}
                             />
                         </TabPanel>
                     </Box>

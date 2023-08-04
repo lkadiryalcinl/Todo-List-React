@@ -85,3 +85,7 @@
 .react-datepicker__navigation,.react-datepicker__navigation--next {
     color: white !important;
 }
+
+.view-control-container {   
+    display: flex !important;
+}
