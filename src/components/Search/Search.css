@@ -1,0 +1,14 @@
+.search-container {
+    display: flex;
+    width: 80vw;
+}
+
+.search-input {
+    position: absolute;
+    left: 2vw;
+    top: 1vw;
+}
+
+.css-q0jhri-MuiInputBase-root-MuiInput-root:after {
+    border-bottom: 2px solid #ED6C02 !important;
+}

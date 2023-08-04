@@ -16,16 +16,16 @@ import {
 } from '@mui/material'
 
 import {
-    
     Edit,
     Delete,
     Bookmark,
+    PriorityHigh
 } from '@mui/icons-material'
 
 
 import './TodoCard.css'
 
-const TodoCard = ({Todo,dispatch,userId,handleUpdateDialog}) => {
+const TodoCard = ({ Todo, dispatch, userId, handleUpdateDialog }) => {
     return (
 
         < Card
@@ -33,8 +33,7 @@ const TodoCard = ({Todo,dispatch,userId,handleUpdateDialog}) => {
                 boxShadow: 2,
                 borderRadius: '20px',
                 display: 'flex'
-            }
-            }
+            }}
             key={Todo.todoID}
         >
             <Checkbox
@@ -50,6 +49,11 @@ const TodoCard = ({Todo,dispatch,userId,handleUpdateDialog}) => {
                 <CardHeader
                     action={
                         <CardActions>
+                            {!Todo.isFinished && <IconButton >
+                                <PriorityHigh
+                                    color={Todo.priorityType === "0" ? "success" : Todo.priorityType === "1" ? "warning" : "error"}
+                                />
+                            </IconButton>}
                             {!Todo.isFinished && <IconButton onClick={
                                 () => {
                                     Todo.isFav ?
@@ -90,17 +94,6 @@ const TodoCard = ({Todo,dispatch,userId,handleUpdateDialog}) => {
                     }
                 />
                 <CardContent>
-                    <Typography
-                        variant="body1"
-                        style={{
-                            color: Todo.priorityType === "Low" ? "green" : Todo.priorityType === "Medium" ? "#ED6C02" : "red"
-                        }}
-                        color={'white'}
-                        borderRadius={20}
-                        flexWrap={'wrap'}
-                    >
-                        {Todo.priorityType} Priority
-                    </Typography>
                     <Typography
                         variant="body2"
                         color="text.secondary"

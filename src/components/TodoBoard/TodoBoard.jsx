@@ -24,6 +24,7 @@ import Dialog from '../Dialog/Dialog'
 import FlatList from 'flatlist-react'
 import TodoCard from '../TodoCard/TodoCard';
 import FilterAside from '../FilterAside/FilterAside';
+import Search from '../Search/Search';
 
 export default function TodoBoard({ userId }) {
     const dispatch = useDispatch();
@@ -39,6 +40,7 @@ export default function TodoBoard({ userId }) {
     const [radioSortValue, setRadioSortValue] = React.useState('title');
     const [radioOrderValue, setRadioOrderValue] = React.useState('');
     const [AddTodoDialog, setAddTodoDialog] = React.useState(false);
+    const [searchTerm, setSearchTerm] = React.useState('')
 
     const handleTabValue = (event, newValue) => {
         setTabValue(newValue);
@@ -56,10 +58,6 @@ export default function TodoBoard({ userId }) {
         }) :
             setUpdateTodoDialog(false)
     }
-
-    React.useEffect(() => {
-        console.log(Boolean(radioOrderValue));
-    }, [radioOrderValue])
 
     const renderWhenEmpty = () => {
         return <div style={{ color: 'black', textAlign: 'center' }}>This List is Empty...</div>
@@ -82,14 +80,9 @@ export default function TodoBoard({ userId }) {
             }}>
                 <TabContext value={tabValue} >
                     <Grid
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
+                        className='todo-board-container'
                     >
-                        <IconButton style={{ backgroundColor: '#ED6C02' }} sx={{ marginY: 2,marginRight:'3%' }}>
+                        <IconButton style={{ backgroundColor: '#ED6C02' }} sx={{ marginY: 2, marginRight: '3%' }}>
                             <Add onClick={() => {
                                 handleAddDialog()
                             }}
@@ -106,8 +99,14 @@ export default function TodoBoard({ userId }) {
                             <Tab label="Finished Todos" value="3" className='tab_item_style' />
                         </TabList>
                     </Box>
-                    <Box style={{ overflow: 'auto', height: '75vh', width: '80vw' }}>
-
+                    <Search value={searchTerm} setValue={setSearchTerm} />
+                    <Box style={{
+                        display: 'flex',
+                        flexDirection:'column',
+                        overflow: 'auto',
+                        height: '70vh',
+                        width: '80vw',
+                    }}>
                         <TabPanel value="1" >
                             <FlatList
                                 list={data}
@@ -127,7 +126,12 @@ export default function TodoBoard({ userId }) {
                                     caseInsensitive: true,
                                     descending: Boolean(radioOrderValue)
                                 }}
-
+                                search={{
+                                    by: "title",
+                                    term: searchTerm,
+                                    caseInsensitive: true,
+                                    minCharactersCount: 1,
+                                }}
                             />
                         </TabPanel>
                         <TabPanel value="2">
@@ -149,6 +153,10 @@ export default function TodoBoard({ userId }) {
                                     caseInsensitive: true,
                                     descending: Boolean(radioOrderValue)
                                 }}
+                                search={{
+                                    by: "title",
+                                    caseInsensitive: true
+                                }}
                             />
                         </TabPanel>
                         <TabPanel value="3">
@@ -169,6 +177,10 @@ export default function TodoBoard({ userId }) {
                                     by: radioSortValue,
                                     caseInsensitive: true,
                                     descending: Boolean(radioOrderValue)
+                                }}
+                                search={{
+                                    by: "title",
+                                    caseInsensitive: true
                                 }}
                             />
                         </TabPanel>

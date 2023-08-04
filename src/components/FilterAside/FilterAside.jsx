@@ -49,7 +49,6 @@ const SortCard = ({ radioSortValue, setRadioSortValue }) => {
                         />}
                         label="Title"
                         className='radio-text'
-
                     />
                     <FormControlLabel
                         value="isFav"

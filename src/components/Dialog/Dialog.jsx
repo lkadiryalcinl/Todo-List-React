@@ -30,9 +30,9 @@ registerLocale("tr", tr);
 export default function TodoDialog({ dialog, changeDialog, dispatch, type, userId, data }) {
 
     const priorityTypeProps = {
-        low: "Low",
-        medium: "Medium",
-        high: "High"
+        low: "0",
+        medium: "1",
+        high: "2"
     }
 
     return (
