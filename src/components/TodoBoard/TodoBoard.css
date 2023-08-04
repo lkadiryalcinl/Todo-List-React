@@ -1,0 +1,35 @@
+.tab_item_style {
+    color: black !important;
+    background-color: #ED6C02;
+    font-size: large !important;
+}
+
+.todo-board-container {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+
+
+.css-1aquho2-MuiTabs-indicator {
+    background-color: #ED6C02 !important;
+}
+
+.react-datepicker__header {
+    background-color: #ED6C02 !important;
+}
+
+.react-datepicker__day-name{
+    color: white !important;
+}
+
+.react-datepicker__current-month,.react-datepicker__current-month--hasYearDropdown,.react-datepicker__current-month--hasMonthDropdown {
+    color: white !important;
+    margin-bottom: 4px;
+}
+
+.react-datepicker__navigation,.react-datepicker__navigation--next {
+    color: white !important;
+}

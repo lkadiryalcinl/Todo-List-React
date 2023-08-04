@@ -183,7 +183,7 @@ const ToggleFavMS = async (TodoID) => {
     }
 }
 
-const ToggleFinished = async (dispatch, TodoID, type, isFav) => {
+const ToggleFinished = async (dispatch, TodoID, type) => {
 
     const body = {
         todoID: TodoID,

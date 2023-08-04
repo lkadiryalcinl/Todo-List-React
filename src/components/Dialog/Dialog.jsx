@@ -20,10 +20,11 @@ import {
 
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import './Dialog.css'
 
 import tr from "date-fns/locale/tr";
-import { AddTodo, UpdateTodo } from '../utils/utils';
-import { TodoValidation } from '../validation/validation';
+import { AddTodo, UpdateTodo } from '../../utils/utils';
+import { TodoValidation } from '../../validation/validation';
 registerLocale("tr", tr);
 
 export default function TodoDialog({ dialog, changeDialog, dispatch, type, userId, data }) {
@@ -88,7 +89,6 @@ export default function TodoDialog({ dialog, changeDialog, dispatch, type, userI
                                         onBlur={handleBlur}
                                         value={values.title}
                                     />
-                                    {errors.title && touched.title && <div>{errors.title}</div>}
 
                                     <TextField
                                         color={errors.description && values.description.length !== 0 ? "error" : ""}
@@ -100,7 +100,7 @@ export default function TodoDialog({ dialog, changeDialog, dispatch, type, userI
                                         value={values.description}
                                         style={{ marginBottom: '1rem', marginTop: '1rem' }}
                                     />
-                                    {errors.description && touched.description && <div>{errors.description}</div>}
+
                                     <FormControl>
 
                                         <InputLabel id="demo-multiple-name-label">Priority Type</InputLabel>
@@ -119,8 +119,6 @@ export default function TodoDialog({ dialog, changeDialog, dispatch, type, userI
                                             <MenuItem value={priorityTypeProps.high}>High</MenuItem>
                                         </Select>
                                     </FormControl>
-
-                                    {errors.priorityType && touched.priorityType && <div>{errors.priorityType}</div>}
 
                                     <Grid style={{ alignItems: 'center', display: 'flex', marginTop: 8, flexDirection: 'column' }}>
                                         <DialogTitle>
@@ -153,9 +151,11 @@ export default function TodoDialog({ dialog, changeDialog, dispatch, type, userI
                                             className=''
                                         />
                                     </Grid>
-                                    <IconButton type="submit" disabled={isSubmitting} onClick={handleSubmit}>
-                                        Submit
-                                    </IconButton>
+                                    <Grid className='icon-button-container'>
+                                        <IconButton type="submit" disabled={isSubmitting} onClick={handleSubmit}>
+                                            Submit
+                                        </IconButton>
+                                    </Grid>
                                 </Grid>
                             )}
                         </Formik>

@@ -1,0 +1,36 @@
+.filter-card-container {
+    display: flex;
+    width: 15vw;
+    height: auto;
+    background-color: white;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+    box-shadow: 2 !important;
+}
+
+.radio-text {
+    color: black !important;
+}
+
+.radio-text-title {
+    font-size: larger !important;
+    border-bottom-width: 10px !important;
+    color: black !important;
+}
+
+.todo-board-filter-container {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    width: 20vw !important;
+    height: 70vh !important;
+}
+
+.view-control-container {   
+    display: flex !important;
+}
