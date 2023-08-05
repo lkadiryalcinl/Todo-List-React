@@ -1,0 +1,24 @@
+.drawer-button-container {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    width: 20vw !important;
+    padding: 0.5rem !important;
+    margin: 0.2rem !important;
+    margin-top: 0 !important;
+}
+
+.drawer-button-container:hover {
+    background-color: #ED6C0240 !important;
+}
+
+.drawer-button-container:active {
+    background-color: #ed6c0220 !important;
+}
+
+.drawer-button-text-container {
+    font-size: x-large !important;
+    color: black !important;
+}
+

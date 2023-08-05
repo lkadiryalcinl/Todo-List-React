@@ -8,25 +8,14 @@ import {
 } from '@mui/material';
 
 import {
-  Logout as LogoutIcon,
   Menu as MenuIcon
 } from '@mui/icons-material';
 
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import Drawer from '../Drawer/Drawer';
 import './Navbar.css'
 
 export default function SearchAppBar() {
   const [openDrawer, setOpenDrawer] = React.useState(false)
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const LogoutHandle = () => {
-    navigate('/')
-    dispatch({ type: 'LOGOUT' })
-  }
 
   return (
     <Box>
@@ -54,13 +43,6 @@ export default function SearchAppBar() {
           >
             TODO LIST
           </Typography>
-          <IconButton
-            size="large"
-            color="inherit"
-            onClick={LogoutHandle}
-          >
-            <LogoutIcon />
-          </IconButton>
         </Toolbar>
         <Drawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
       </AppBar>

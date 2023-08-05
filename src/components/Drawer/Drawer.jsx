@@ -1,15 +1,22 @@
 import * as React from 'react'
+
 import {
-    Button,
     Drawer,
     Grid,
-    Link,
     Typography
 } from '@mui/material'
 
+import {
+    Logout,
+    ManageAccounts,
+    Dashboard
+} from '@mui/icons-material'
+
 import './Drawer.css'
+import DrawerButton from './DrawerButton';
 
 const DrawerComp = ({ openDrawer, setOpenDrawer }) => {
+
     return (
         <Drawer
             anchor='left'
@@ -26,22 +33,9 @@ const DrawerComp = ({ openDrawer, setOpenDrawer }) => {
                     </Typography>
                 </Grid>
                 <Grid className='drawer-content'>
-                    <Button className='drawer-content-button'>
-                        <Link
-                            href="/dashboard"
-                            className='drawer-content-button-text'
-                        >
-                            Dashboard
-                        </Link>
-                    </Button>
-                    <Button className='drawer-content-button'>
-                        <Link
-                            href="/accountSettings"
-                            className='drawer-content-button-text'
-                        >
-                            Account Settings
-                        </Link>
-                    </Button>
+                    <DrawerButton title={'Dashboard'} href={'/dashboard'} logout={false} icon={<Dashboard/>}/>
+                    <DrawerButton title = {'Account Settings'} href={'/accountSettings'} logout={false} icon={<ManageAccounts/>}/>
+                    <DrawerButton title={'Logout'} href={'/'} logout={true} icon={<Logout/>}/>
                 </Grid>
             </Grid>
         </Drawer>

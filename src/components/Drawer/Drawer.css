@@ -25,19 +25,3 @@
     color: white;
 }
 
-.drawer-content-button {
-    width: 20vw;
-}
-
-.drawer-content-button:hover {
-    background-color: #ED6C0240 !important;
-}
-
-.drawer-content-button:active {
-    background-color: #ed6c0220 !important;
-}
-
-.drawer-content-button-text {
-    color: black !important;
-    text-decoration: none !important;
-}
