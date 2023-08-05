@@ -2,3 +2,15 @@
     display: block;
     width: 90vw;
 }
+
+.priority-icon-button-success {
+    background-color: #2e7d3240 !important;    
+}
+
+.priority-icon-button-warning {
+    background-color: #ED6C0240 !important;
+}
+
+.priority-icon-button-error {
+    background-color: #D32F2F40 !important;
+}

@@ -49,7 +49,12 @@ const TodoCard = ({ Todo, dispatch, userId, handleUpdateDialog }) => {
                 <CardHeader
                     action={
                         <CardActions>
-                            {!Todo.isFinished && <IconButton >
+                            {!Todo.isFinished && <IconButton
+                                className={
+                                    Todo.priorityType === "0" ? "priority-icon-button-success"
+                                        : Todo.priorityType === "1" ? "priority-icon-button-warning"
+                                            : "priority-icon-button-error"}
+                            >
                                 <PriorityHigh
                                     color={Todo.priorityType === "0" ? "success" : Todo.priorityType === "1" ? "warning" : "error"}
                                 />
