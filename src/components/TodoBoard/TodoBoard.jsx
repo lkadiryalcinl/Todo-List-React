@@ -18,7 +18,7 @@ import {
 } from '@mui/lab'
 
 import './TodoBoard.css';
-import { GetTodoByID, } from '../../utils/utils'
+import { GetTodoByID } from '../../utils/utils'
 import { useDispatch, useSelector } from 'react-redux';
 import Dialog from '../Dialog/Dialog'
 import FlatList from 'flatlist-react'
@@ -26,25 +26,31 @@ import TodoCard from '../TodoCard/TodoCard';
 import FilterAside from '../FilterAside/FilterAside';
 import Search from '../Search/Search';
 
-export default function TodoBoard({ userId }) {
+export default function TodoBoard() {
     const dispatch = useDispatch();
+    const userId = useSelector(state => state.user.userID)
 
     const data = useSelector(state => state.todo.data)
     const favoritedData = useSelector(state => state.todo.favoritedData)
     const finishedData = useSelector(state => state.todo.finishedData)
 
     const [updateTodoDialog, setUpdateTodoDialog] = React.useState(false);
+    const [AddTodoDialog, setAddTodoDialog] = React.useState(false);
+    const [info,setInfo] = React.useState(false);
     const [selectedTodo, setSelectedTodo] = React.useState(null);
     const [tabValue, setTabValue] = React.useState('1');
-    const [columnWidth, setColumnWidth] = React.useState('40vw')
+    const [columnWidth, setColumnWidth] = React.useState('40vw');
     const [radioSortValue, setRadioSortValue] = React.useState('title');
     const [radioOrderValue, setRadioOrderValue] = React.useState('');
-    const [AddTodoDialog, setAddTodoDialog] = React.useState(false);
-    const [searchTerm, setSearchTerm] = React.useState('')
+    const [searchTerm, setSearchTerm] = React.useState('');
 
     const handleTabValue = (event, newValue) => {
         setTabValue(newValue);
     };
+
+    const handleInfo = () => {
+        setInfo(!info)
+    }
 
     const handleAddDialog = () => {
         setAddTodoDialog(!AddTodoDialog);
@@ -102,7 +108,7 @@ export default function TodoBoard({ userId }) {
                     <Search value={searchTerm} setValue={setSearchTerm} />
                     <Box style={{
                         display: 'flex',
-                        flexDirection:'column',
+                        flexDirection: 'column',
                         overflow: 'auto',
                         height: '70vh',
                         width: '80vw',
@@ -117,6 +123,7 @@ export default function TodoBoard({ userId }) {
                                         dispatch={dispatch}
                                         userId={userId}
                                         handleUpdateDialog={handleUpdateDialog}
+                                        handleInfo={handleInfo}
                                     />}
                                 renderWhenEmpty={renderWhenEmpty}
                                 displayGrid
@@ -144,6 +151,7 @@ export default function TodoBoard({ userId }) {
                                         dispatch={dispatch}
                                         userId={userId}
                                         handleUpdateDialog={handleUpdateDialog}
+                                        handleInfo={handleInfo}
                                     />}
                                 renderWhenEmpty={renderWhenEmpty}
                                 displayGrid
@@ -169,6 +177,7 @@ export default function TodoBoard({ userId }) {
                                         dispatch={dispatch}
                                         userId={userId}
                                         handleUpdateDialog={handleUpdateDialog}
+                                        handleInfo={handleInfo}
                                     />}
                                 renderWhenEmpty={renderWhenEmpty}
                                 displayGrid
@@ -194,6 +203,7 @@ export default function TodoBoard({ userId }) {
                 type={true}
                 userId={userId}
                 data={selectedTodo}
+                info={info}
             />
             <Dialog
                 dialog={AddTodoDialog}

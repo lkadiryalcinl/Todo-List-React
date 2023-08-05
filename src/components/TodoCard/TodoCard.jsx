@@ -19,9 +19,8 @@ import {
     Edit,
     Delete,
     Bookmark,
-    PriorityHigh
+    PriorityHigh,
 } from '@mui/icons-material'
-
 
 import './TodoCard.css'
 

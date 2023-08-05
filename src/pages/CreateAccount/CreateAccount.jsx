@@ -2,10 +2,10 @@ import * as React from 'react';
 import { Grid, TextField, Button, Link, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { HandleAuth } from '../utils/utils';
 import { Formik } from 'formik';
 import { Lock } from '@mui/icons-material';
-import { SignUpSchema } from '../validation/validation';
+import { HandleAuth } from '../../utils/utils';
+import { SignUpSchema } from '../../validation/validation';
 
 import './CreateAccount.css'
 

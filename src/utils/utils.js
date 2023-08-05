@@ -255,7 +255,7 @@ const HandleAuth = async (navigate, dispatch, loginData, type) => {
 
             if (data.hasAccess) {
                 dispatch({ type: "SUCCESS", payload: data.userId })
-                navigate('/home', { state: { userId: data.userId } })
+                navigate('/dashboard', { state: { userId: data.userId } })
                 return false
             }
             return true

@@ -3,9 +3,9 @@ import { Grid, TextField, Button, Typography, Link, Alert, AlertTitle } from '@m
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
-import { HandleAuth } from '../utils/utils';
 import { Lock } from '@mui/icons-material';
-import { LoginSchema } from '../validation/validation';
+import { HandleAuth } from '../../utils/utils';
+import { LoginSchema } from '../../validation/validation';
 
 import './Login.css'
 
@@ -13,8 +13,7 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [alert, setAlert] = React.useState(false);
-
-
+  
   return (
 
     <Grid className='login-page-container'>

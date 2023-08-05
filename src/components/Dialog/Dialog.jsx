@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 
 import DatePicker, { registerLocale } from "react-datepicker";
+import TodoAlert from '../TodoAlert/TodoAlert'
 import "react-datepicker/dist/react-datepicker.css";
 import './Dialog.css'
 
@@ -160,6 +161,7 @@ export default function TodoDialog({ dialog, changeDialog, dispatch, type, userI
                             )}
                         </Formik>
                     </Grid>
+                    {type?<TodoAlert Todo={data}/>:null}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={changeDialog}>Close</Button>

@@ -4,7 +4,7 @@ import {
   Box,
   Toolbar,
   IconButton,
-  Typography  
+  Typography
 } from '@mui/material';
 
 import {
@@ -14,8 +14,12 @@ import {
 
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import Drawer from '../Drawer/Drawer';
+import './Navbar.css'
 
 export default function SearchAppBar() {
+  const [openDrawer, setOpenDrawer] = React.useState(false)
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -25,17 +29,22 @@ export default function SearchAppBar() {
   }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{ backgroundColor: '#ED6C02'}} >
+    <Box>
+      <AppBar
+        position="static"
+        className='navbar-container'
+      >
         <Toolbar>
           <IconButton
             size="large"
             edge="start"
-            color="inherit"
+            color='inherit'
             aria-label="open drawer"
             sx={{ mr: 2 }}
+            onClick={() => setOpenDrawer(!openDrawer)}
           >
-            <MenuIcon />
+            <MenuIcon
+            />
           </IconButton>
           <Typography
             variant="h6"
@@ -53,6 +62,7 @@ export default function SearchAppBar() {
             <LogoutIcon />
           </IconButton>
         </Toolbar>
+        <Drawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
       </AppBar>
     </Box>
   );
