@@ -1,4 +1,5 @@
 const RemoveTodo = async (dispatch, todoID, type) => {
+    console.log(type);
     try {
         const response = await fetch(`https://localhost:44389/api/${type}/${todoID}`, {
             method: 'DELETE',
@@ -9,9 +10,16 @@ const RemoveTodo = async (dispatch, todoID, type) => {
         if (response.ok) {
             type === "finishedtodo" ?
                 dispatch({ type: "REMOVE_FROM_FIN_DATA", payload: { todoID } }) :
-                type === "favtodo" ?
-                    dispatch({ type: "REMOVE_FROM_FAV_DATA", payload: { todoID } }) :
-                    dispatch({ type: "REMOVE_FROM_DATA", payload: { todoID } })
+                type === "favtodo" &&
+                dispatch({ type: "REMOVE_FROM_FAV_DATA", payload: { todoID } }) &&
+                dispatch({ type: "REMOVE_FROM_DATA", payload: { todoID } }) &&
+                
+                await fetch(`https://localhost:44389/api/todo/${todoID}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
         } else {
             console.error('Todo Delete Failed:', response.status, response.statusText);
         }
@@ -67,7 +75,8 @@ const AddTodo = async (dispatch, data, userID) => {
         dateStart: data.date ? new Date(dateStart.getTime() - (new Date().getTimezoneOffset() * 60000)) : new Date(data.dateStart),
         dateEnd: data.date ? new Date(dateEnd.getTime() - (new Date().getTimezoneOffset() * 60000)) : new Date(data.dateEnd),
         isFinished: false,
-        isFav: false
+        isFav: false,
+        isActive: true
     }
 
     try {
@@ -111,7 +120,8 @@ const UpdateTodo = async (dispatch, values, data, type) => {
         dateStart: new Date(dateStart.getTime() - (new Date().getTimezoneOffset() * 60000)),
         dateEnd: new Date(dateEnd.getTime() - (new Date().getTimezoneOffset() * 60000)),
         isFav: data.isFav,
-        isFinished: data.isFinished
+        isFinished: data.isFinished,
+        isActive: data.isActive
     }
 
     try {
@@ -125,6 +135,7 @@ const UpdateTodo = async (dispatch, values, data, type) => {
 
         const data = await response.json()
         if (response.ok) {
+
         } else {
             console.error('Todo Add Failed:', response.status, response.statusText);
         }
