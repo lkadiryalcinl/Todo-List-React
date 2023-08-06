@@ -8,20 +8,36 @@ import {
 } from '@mui/material'
 
 import { useDispatch } from 'react-redux';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import AlertDialog from '../Dialog/AlertDialog/AlertDialog';
 
 import './DrawerButton.css'
 
 const DrawerButton = ({ title, href, logout, icon }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [openAlert, setOpenAlert] = React.useState(false)
+
+    const handleOption1Click = () => {
+        navigate(href)
+        dispatch({ type: 'LOGOUT' })
+        setOpenAlert(false);
+    };
+
+    const handleOption2Click = () => {
+        setOpenAlert(false);
+    };
 
     return (
-        <Grid className='drawer-button-container' onClick={() => {
-            if (logout)
-                dispatch({ type: 'LOGOUT' })
-            navigate(href)
-        }}>
+        <Grid
+            className='drawer-button-container'
+            onClick={() => {
+                if (logout) {
+                    setOpenAlert(!openAlert)
+                }
+                else
+                    navigate(href)
+            }}>
             <Icon
                 color='inherit'
             >
@@ -35,6 +51,14 @@ const DrawerButton = ({ title, href, logout, icon }) => {
                     {title}
                 </Typography>
             </Link>
+            <AlertDialog
+                title={"Are you sure?"}
+                description={"Are you really sure about it?"}
+                open={openAlert}
+                setOpen={setOpenAlert}
+                option1={handleOption1Click}
+                option2={handleOption2Click}
+            />
         </Grid>
     )
 }

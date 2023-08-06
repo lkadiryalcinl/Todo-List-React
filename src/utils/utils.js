@@ -1,5 +1,4 @@
 const RemoveTodo = async (dispatch, todoID, type) => {
-    console.log(type);
     try {
         const response = await fetch(`https://localhost:44389/api/${type}/${todoID}`, {
             method: 'DELETE',
@@ -269,7 +268,7 @@ const HandleAuth = async (navigate, dispatch, loginData, type) => {
 
         if (response.ok) {
             const data = await response.json()
-
+            console.log(data)
             if (data.hasAccess) {
                 dispatch({ type: "SUCCESS", payload: data.userId })
                 navigate('/dashboard', { state: { userId: data.userId } })

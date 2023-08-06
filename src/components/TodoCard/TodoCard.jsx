@@ -1,3 +1,5 @@
+import * as React from 'react'
+
 import {
     RemoveTodo,
     ToggleFav,
@@ -23,8 +25,25 @@ import {
 } from '@mui/icons-material'
 
 import './TodoCard.css'
+import AlertDialog from '../Dialog/AlertDialog/AlertDialog'
 
 const TodoCard = ({ Todo, dispatch, userId, handleUpdateDialog }) => {
+
+    const [openAlert, setOpenAlert] = React.useState(false)
+
+    const handleOption1Click = (Todo) => {
+        Todo.isFinished ?
+            RemoveTodo(dispatch, Todo.todoID, "finishedtodo") :
+            Todo.isFav ?
+                RemoveTodo(dispatch, Todo.todoID, "favtodo") :
+                RemoveTodo(dispatch, Todo.todoID, "todo")
+        setOpenAlert(false);
+    };
+
+    const handleOption2Click = () => {
+        setOpenAlert(false);
+    };
+
     return (
 
         < Card
@@ -76,11 +95,7 @@ const TodoCard = ({ Todo, dispatch, userId, handleUpdateDialog }) => {
                                 <Edit />
                             </IconButton>}
                             <IconButton onClick={() => {
-                                Todo.isFinished ?
-                                    RemoveTodo(dispatch, Todo.todoID, "finishedtodo") :
-                                    Todo.isFav ?
-                                        RemoveTodo(dispatch, Todo.todoID, "favtodo") :
-                                        RemoveTodo(dispatch, Todo.todoID, "todo")
+                                setOpenAlert(!openAlert)
                             }}>
                                 <Delete />
                             </IconButton>
@@ -107,6 +122,14 @@ const TodoCard = ({ Todo, dispatch, userId, handleUpdateDialog }) => {
                     </Typography>
                 </CardContent>
             </Grid>
+            <AlertDialog
+                title={"Are you sure?"}
+                description={"Do you want to remove this todo?"}
+                open={openAlert}
+                setOpen={setOpenAlert}
+                option1={() => handleOption1Click(Todo)}
+                option2={handleOption2Click}
+            />
         </Card >
     )
 }
