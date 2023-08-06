@@ -20,5 +20,6 @@
 .drawer-button-text-container {
     font-size: x-large !important;
     color: black !important;
+    cursor: default !important;
 }
 

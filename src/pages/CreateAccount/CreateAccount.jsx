@@ -123,8 +123,7 @@ const Login = () => {
               </Grid>
               <Link
                 href="/"
-                underline="hover"
-                color={'black'}
+                className='link'
               >
                 Have an account.
               </Link>

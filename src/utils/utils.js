@@ -52,12 +52,18 @@ const AddTodo = async (dispatch, data, userID) => {
     let dateStart = new Date(data.date?.dateStart)
     let dateEnd = new Date(data.date?.dateEnd)
 
+    dateStart.setHours(new Date().getHours())
+    dateStart.setMinutes(new Date().getMinutes())
+
+    dateEnd.setHours(new Date().getHours())
+    dateEnd.setMinutes(new Date().getMinutes())
+
     const body = {
         userID: userID,
         title: data.title,
         description: data.description,
         priorityType: data.priorityType,
-        dateCreated: new Date(),
+        dateCreated: new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)),
         dateStart: data.date ? new Date(dateStart.getTime() - (new Date().getTimezoneOffset() * 60000)) : new Date(data.dateStart),
         dateEnd: data.date ? new Date(dateEnd.getTime() - (new Date().getTimezoneOffset() * 60000)) : new Date(data.dateEnd),
         isFinished: false,
@@ -89,6 +95,12 @@ const UpdateTodo = async (dispatch, values, data, type) => {
     let dateStart = new Date(values.date.dateStart)
     let dateEnd = new Date(values.date.dateEnd)
 
+    dateStart.setHours(new Date(data.dateCreated).getHours())
+    dateStart.setMinutes(new Date(data.dateCreated).getMinutes())
+
+    dateEnd.setHours(new Date(data.dateCreated).getHours())
+    dateEnd.setMinutes(new Date(data.dateCreated).getMinutes())
+
     let body = {
         todoId: data.todoID,
         userID: data.userID,
@@ -113,18 +125,12 @@ const UpdateTodo = async (dispatch, values, data, type) => {
 
         const data = await response.json()
         if (response.ok) {
-            console.log(data)
-
         } else {
             console.error('Todo Add Failed:', response.status, response.statusText);
         }
     } catch (error) {
         console.error('Request Failed', error.message);
     }
-
-
-
-
 }
 
 const ToggleFav = async (dispatch, TodoID, type) => {

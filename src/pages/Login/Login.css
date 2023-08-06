@@ -44,3 +44,12 @@
         color: white !important;
         background-color: #ED6C02 !important;
 }
+
+.link {
+    color: black !important;
+    text-decoration-color: black !important;
+}
+
+.link:hover {
+    color: #000000aa !important;
+}

@@ -113,8 +113,8 @@ const Login = () => {
               </Grid>
               <Link
                 href="/createAccount"
-                underline="hover"
-                color={'black'}
+                underline="always"
+                className='link'
               >
                 Don't have an account yet.
               </Link>

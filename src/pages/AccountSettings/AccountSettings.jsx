@@ -20,7 +20,7 @@ const accountSettings = () => {
                     </Grid>
                 </Grid>
                 <Grid className='account-content-container'>
-
+                    
                 </Grid>
             </Grid>
         </>

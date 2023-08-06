@@ -28,7 +28,6 @@ export default function SearchAppBar() {
             size="large"
             edge="start"
             color='inherit'
-            aria-label="open drawer"
             sx={{ mr: 2 }}
             onClick={() => setOpenDrawer(!openDrawer)}
           >

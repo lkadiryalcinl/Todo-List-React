@@ -1,13 +1,20 @@
 .account-container {
-    
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    background: #ffdfc4 !important;
+    height: 92vh;
 }
 
 .account-top-title-container{
-
+    height: 10%;
+    width: 100%;
+    background: red;
 }
 
 .account-top-title{
-
+    
 }
 
 .account-top-title-text{
@@ -15,5 +22,7 @@
 }
 
 .account-content-container{
-
+    height: 90%;
+    width: 100%;
+    background: purple;
 }
