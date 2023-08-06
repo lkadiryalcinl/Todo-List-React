@@ -4,39 +4,58 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { Lock } from '@mui/icons-material';
-import { HandleAuth } from '../../utils/utils';
+import { HandleAuth, ActivateUser } from '../../utils/utils';
 import { LoginSchema } from '../../validation/validation';
 
+import AlertDialog from '../../components/Dialog/AlertDialog/AlertDialog'
 import './Login.css'
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [alert, setAlert] = React.useState(false);
-  
+  const [alert, setAlert] = React.useState("");
+  const [UserID, setUserID] = React.useState(-1)
+  const [openAlert, setOpenAlert] = React.useState(false)
+  const [again, setAgain] = React.useState(false)
+
+  const handleOption1Click = () => {
+    ActivateUser(dispatch, navigate, UserID)
+    setOpenAlert(false);
+  };
+
+  const handleOption2Click = () => {
+    setOpenAlert(!openAlert);
+  };
+
+  React.useEffect(() => {
+    if (alert === "USER_DEACTIVE")
+      setOpenAlert(!openAlert)
+  }, [alert, again])
+
   return (
 
     <Grid className='login-page-container'>
-      {alert &&
-        <Alert
-          severity="error"
-          style={{
-            position: 'absolute',
-            top: 8,
-          }}
-        >
-          <AlertTitle>Error</AlertTitle>
-          This user not found — <strong>check your username or password</strong>
-        </Alert>
-      }
+      {alert.length !== 0 && <Alert
+        severity={alert === "USER_FOUND" ? "success" : alert === "USER_DEACTIVE" ? "warning" : "error"}
+        style={{
+          position: 'absolute',
+          top: 8,
+        }}
+      >
+        <AlertTitle>{alert === "USER_FOUND" ? "Success" : alert === "USER_DEACTIVE" ? "User Deactive" : "This user not found"}</AlertTitle>
+        <strong>{alert === "USER_FOUND" ? "success" : alert === "USER_DEACTIVE" ? "You need to activate your account" : "Please check username or password"}</strong>
+      </Alert>}
       <Formik
         initialValues={{
           username: "",
           password: ""
         }}
         validationSchema={LoginSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          setAlert(HandleAuth(navigate, dispatch, values, "Login"))
+        onSubmit={async (values, { setSubmitting }) => {
+          const result = await HandleAuth(navigate, dispatch, values, "Login")
+          setAlert(result.text)
+          setUserID(result.userID)
+          setAgain(!again)
           setSubmitting(false)
         }}
       >
@@ -123,6 +142,14 @@ const Login = () => {
         )
         }
       </Formik >
+      <AlertDialog
+        title={"Your Account is Deactive"}
+        description={"Do you want to activate your account?"}
+        open={openAlert}
+        setOpen={setOpenAlert}
+        option1={handleOption1Click}
+        option2={handleOption2Click}
+      />
     </Grid >
   );
 };

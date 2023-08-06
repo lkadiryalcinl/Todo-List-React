@@ -12,7 +12,7 @@ const RemoveTodo = async (dispatch, todoID, type) => {
                 type === "favtodo" &&
                 dispatch({ type: "REMOVE_FROM_FAV_DATA", payload: { todoID } }) &&
                 dispatch({ type: "REMOVE_FROM_DATA", payload: { todoID } }) &&
-                
+
                 await fetch(`https://localhost:44389/api/todo/${todoID}`, {
                     method: 'DELETE',
                     headers: {
@@ -21,6 +21,52 @@ const RemoveTodo = async (dispatch, todoID, type) => {
                 })
         } else {
             console.error('Todo Delete Failed:', response.status, response.statusText);
+        }
+    } catch (error) {
+        console.error('Request Failed', error.message);
+    }
+}
+
+const ActivateUser = async (dispatch, navigate, UserID) => {
+    const body = {
+        userID: UserID
+    }
+
+    try {
+        const response = await fetch(`https://localhost:44389/api/auth/activate`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body)
+        })
+        const data = await response.json()
+        if (response.ok) {
+            dispatch({ type: 'SUCCESS', payload: data.userId })
+            navigate('/dashboard')
+        } else {
+            console.error('User Activate Failed:', response.status, response.statusText);
+        }
+    } catch (error) {
+        console.error('Request Failed', error.message);
+    }
+}
+
+const RemoveUser = async (dispatch, navigate, UserID) => {
+    try {
+        const response = await fetch(`https://localhost:44389/api/auth/${UserID}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+
+        const data = await response.json()
+        if (response.ok) {
+            dispatch({ type: 'LOGOUT' })
+            navigate('/')
+        } else {
+            console.error('User Remove Failed:', response.status, response.statusText);
         }
     } catch (error) {
         console.error('Request Failed', error.message);
@@ -256,6 +302,26 @@ const GetTodoByID = async (TodoID, type) => {
     }
 }
 
+const GetUserByID = async (UserID) => {
+    try {
+        const response = await fetch(`https://localhost:44389/api/auth/${UserID}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        const data = await response.json()
+
+        if (response.ok) {
+            return data;
+        } else {
+            console.error('Kullanıcı bulunamadı: ', response.status, response.statusText);
+        }
+    } catch (error) {
+        console.error('İstek gönderilirken bir hata oluştu:', error.message);
+    }
+}
+
 const HandleAuth = async (navigate, dispatch, loginData, type) => {
     try {
         const response = await fetch(`https://localhost:44389/api/auth/${type}`, {
@@ -267,21 +333,29 @@ const HandleAuth = async (navigate, dispatch, loginData, type) => {
         });
 
         if (response.ok) {
-            const data = await response.json()
-            console.log(data)
+            const data = await response.json();
+
             if (data.hasAccess) {
-                dispatch({ type: "SUCCESS", payload: data.userId })
-                navigate('/dashboard', { state: { userId: data.userId } })
-                return false
+                const user = await GetUserByID(data.userId);
+                if (user) {
+                    dispatch({ type: "SUCCESS", payload: data.userId });
+                    navigate('/dashboard', { state: { userId: data.userId } });
+                    return { text: "USER_FOUND", userID: data.userId };
+
+                } else {
+                    return { text: "USER_DEACTIVE", userID: data.userId };
+                }
+            } else {
+                return { text: "USER_NOT_FOUND" };
             }
-            return true
         } else {
-            console.error('Auth başarısız:', response.status, response.statusText);
+            console.error('Kimlik doğrulama başarısız:', response.status, response.statusText);
         }
     } catch (error) {
         console.error('İstek gönderilirken bir hata oluştu:', error.message);
     }
 };
+
 
 const FetchData = async (dispatch, userId, type) => {
     try {
@@ -315,4 +389,6 @@ export {
     GetTodoByID,
     ToggleFinished,
     FetchData,
+    RemoveUser,
+    ActivateUser
 }
