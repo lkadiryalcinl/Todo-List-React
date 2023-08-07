@@ -11,7 +11,11 @@
     align-items: center !important;
 }
 
-
+.todo-add-button {
+    position: absolute;
+    bottom: 1rem;
+    right: 3rem;
+}
 
 .css-1aquho2-MuiTabs-indicator {
     background-color: #ED6C02 !important;

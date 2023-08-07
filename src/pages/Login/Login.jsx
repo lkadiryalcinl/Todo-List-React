@@ -1,5 +1,15 @@
 import * as React from 'react';
-import { Grid, TextField, Button, Typography, Link, Alert, AlertTitle } from '@mui/material';
+
+import { 
+  Grid, 
+  TextField, 
+  Button, 
+  Typography, 
+  Link, 
+  Alert, 
+  AlertTitle,
+} from '@mui/material';
+
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
@@ -34,7 +44,7 @@ const Login = () => {
 
   return (
 
-    <Grid className='login-page-container'>
+    <Grid container className='login-page-container'>
       {alert.length !== 0 && <Alert
         severity={alert === "USER_FOUND" ? "success" : alert === "USER_DEACTIVE" ? "warning" : "error"}
         style={{
@@ -45,6 +55,13 @@ const Login = () => {
         <AlertTitle>{alert === "USER_FOUND" ? "Success" : alert === "USER_DEACTIVE" ? "User Deactive" : "This user not found"}</AlertTitle>
         <strong>{alert === "USER_FOUND" ? "success" : alert === "USER_DEACTIVE" ? "You need to activate your account" : "Please check username or password"}</strong>
       </Alert>}
+      <Grid style={{
+        backgroundImage:'url("https://previews.123rf.com/images/veeksegal/veeksegal1607/veeksegal160700013/60256947-vector-sketch-to-do-list-black-on-white-background.jpg")',
+        backgroundSize:'contain',
+        backgroundRepeat:'no-repeat',
+        width:'30vw',
+        height:'80vh'
+      }}/>
       <Formik
         initialValues={{
           username: "",
@@ -67,13 +84,8 @@ const Login = () => {
           handleSubmit,
           isSubmitting,
         }) => (
-          <Grid
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            <Grid className='form-header-container'>
+          <Grid>
+            <Grid container className='form-header-container'>
               <Typography
                 variant='h5'
                 color={'white'}
@@ -99,7 +111,7 @@ const Login = () => {
                   Welcome
                 </Typography>
               </Grid>
-              <Grid className='form-style'>
+              <Grid container className='form-style'>
                 <TextField
                   color={errors.username && values.username.length !== 0 ? "error" : "warning"}
                   label={errors.username && values.username.length !== 0 ? errors.username : 'Username'}

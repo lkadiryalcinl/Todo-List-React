@@ -13,7 +13,7 @@
     background-color: #ED6C0240 !important;
 }
 
-.drawer-button-container:active {
+.drawer-button-container:focus {
     background-color: #ed6c0220 !important;
 }
 

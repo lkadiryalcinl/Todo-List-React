@@ -1,12 +1,14 @@
 import React from 'react';
 import { Alert, Typography } from '@mui/material';
-import './TodoAlert.css'
+import './TodoAlert.css';
 
 const TodoAlert = ({ Todo }) => {
   const currentDate = new Date();
+  const dateStart = new Date(Todo.dateStart);
+  const dateEnd = new Date(Todo.dateEnd);
 
-  if (currentDate < new Date(Todo.dateStart)) {
-    const daysLeft = Math.round((new Date(Todo.dateStart).getTime() - currentDate.getTime()) / (1000 * 3600 * 24));
+  if (currentDate < dateStart) {
+    const daysLeft = Math.round((dateStart.getTime() - currentDate.getTime()) / (1000 * 3600 * 24));
     return (
       <Alert variant="filled" severity="success">
         <Typography variant="body2" color="inherit" textAlign="center" padding={1} borderRadius={20}>
@@ -14,20 +16,28 @@ const TodoAlert = ({ Todo }) => {
         </Typography>
       </Alert>
     );
-  } else if (currentDate > new Date(Todo.dateEnd)) {
+  } else if (currentDate >= dateEnd) {
     return (
       <Alert variant="filled" severity="error">
         <Typography variant="body2" color="inherit" textAlign="center" padding={1} borderRadius={20}>
-          Today Must Finished
+          Todo Must Finished Today - Hurry Up!
+        </Typography>
+      </Alert>
+    );
+  } else if (dateEnd < currentDate) {
+    return (
+      <Alert variant="filled" severity="error">
+        <Typography variant="body2" color="inherit" textAlign="center" padding={1} borderRadius={20}>
+          Todo Expired - Not Finished in Time!
         </Typography>
       </Alert>
     );
   } else {
-    const daysRemained = Math.round((new Date(Todo.dateEnd).getTime() - currentDate.getTime()) / (1000 * 3600 * 24));
+    const daysRemained = Math.round((dateEnd.getTime() - currentDate.getTime()) / (1000 * 3600 * 24));
     const endDateString = [
-      new Date(Todo.dateEnd).getDate(),
-      new Date(Todo.dateEnd).getMonth() + 1,
-      new Date(Todo.dateEnd).getFullYear(),
+      dateEnd.getDate(),
+      dateEnd.getMonth() + 1,
+      dateEnd.getFullYear(),
     ].join('/');
 
     return (

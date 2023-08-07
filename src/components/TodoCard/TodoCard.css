@@ -4,13 +4,31 @@
 }
 
 .priority-icon-button-success {
-    background-color: #2e7d3240 !important;    
+    background-color: #2e7d3240 !important;
+    width: 2rem !important;
+    height: 2rem !important;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
 }
 
 .priority-icon-button-warning {
     background-color: #ED6C0240 !important;
+    width: 2rem !important;
+    height: 2rem !important;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
 }
 
 .priority-icon-button-error {
     background-color: #D32F2F40 !important;
+    width: 2rem !important;
+    height: 2rem !important;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
 }

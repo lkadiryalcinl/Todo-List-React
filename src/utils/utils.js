@@ -1,5 +1,27 @@
 const RemoveTodo = async (dispatch, todoID, type) => {
     try {
+        const response = await fetch(`https://localhost:44389/api/${type}/remove/${todoID}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        if (response.ok) {
+            type === "finishedtodo" ?
+                dispatch({ type: "REMOVE_FROM_FIN_DATA", payload: { todoID } }) :
+                type === "favtodo" ?
+                    dispatch({ type: "REMOVE_FROM_FAV_DATA", payload: { todoID } }) :
+                    dispatch({ type: "REMOVE_FROM_DATA", payload: { todoID } })
+        } else {
+            console.error('Todo Delete Failed:', response.status, response.statusText);
+        }
+    } catch (error) {
+        console.error('Request Failed', error.message);
+    }
+}
+
+const DeactivateTodo = async (dispatch, todoID, type) => {
+    try {
         const response = await fetch(`https://localhost:44389/api/${type}/${todoID}`, {
             method: 'DELETE',
             headers: {
@@ -9,16 +31,18 @@ const RemoveTodo = async (dispatch, todoID, type) => {
         if (response.ok) {
             type === "finishedtodo" ?
                 dispatch({ type: "REMOVE_FROM_FIN_DATA", payload: { todoID } }) :
-                type === "favtodo" &&
-                dispatch({ type: "REMOVE_FROM_FAV_DATA", payload: { todoID } }) &&
-                dispatch({ type: "REMOVE_FROM_DATA", payload: { todoID } }) &&
+                type === "favtodo" ?
+                    dispatch({ type: "REMOVE_FROM_FAV_DATA", payload: { todoID } }) &&
+                    dispatch({ type: "REMOVE_FROM_DATA", payload: { todoID } }) &&
 
-                await fetch(`https://localhost:44389/api/todo/${todoID}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                })
+                    await fetch(`https://localhost:44389/api/todo/${todoID}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    }) :
+                    dispatch({ type: 'REMOVE_FROM_DATA', payload: { todoID } })
+
         } else {
             console.error('Todo Delete Failed:', response.status, response.statusText);
         }
@@ -146,6 +170,7 @@ const AddTodo = async (dispatch, data, userID) => {
 }
 
 const UpdateTodo = async (dispatch, values, data, type) => {
+    console.log(type);
     let dateStart = new Date(values.date.dateStart)
     let dateEnd = new Date(values.date.dateEnd)
 
@@ -179,8 +204,18 @@ const UpdateTodo = async (dispatch, values, data, type) => {
         })
 
         const data = await response.json()
-        if (response.ok) {
+        dispatch({ type: 'REMOVE_FROM_DATA', payload: data })
+        data.isFav && dispatch({ type: 'REMOVE_FROM_FAV_DATA', payload: data })
 
+        if (response.ok) {
+            if (type === "todo") {
+                dispatch({ type: 'ADD_TODO', payload: data })
+                data.isFav && dispatch({ type: 'ADD_FAV', payload: data })
+            }
+            else if (type === "favtodo") {
+                dispatch({ type: 'ADD_TODO', payload: data })
+                dispatch({ type: 'ADD_FAV', payload: data })
+            }
         } else {
             console.error('Todo Add Failed:', response.status, response.statusText);
         }
@@ -193,7 +228,6 @@ const ToggleFav = async (dispatch, TodoID, type) => {
     const body = {
         todoID: TodoID
     }
-
     try {
         const response = await fetch(`https://localhost:44389/api/${type}/favorited`, {
             method: 'PUT',
@@ -210,7 +244,7 @@ const ToggleFav = async (dispatch, TodoID, type) => {
             if (type === "favtodo") {
                 dispatch({ type: 'REMOVE_FROM_FAV_DATA', payload: data })
                 dispatch({ type: 'ADD_TODO', payload: data })
-                RemoveTodo(dispatch, TodoID, "favtodo")
+                RemoveTodo(dispatch, data.todoID, "favtodo")
                 ToggleFavMS(TodoID)
             }
             else if (type === "todo") {
@@ -266,13 +300,13 @@ const ToggleFinished = async (dispatch, TodoID, type) => {
             if (type === "todo") {
                 AddTodoMongo(data, "finishedtodo")
                 dispatch({ type: 'ADD_FIN', payload: data })
-                RemoveTodo(dispatch, data.todoID, "todo")
-                data.isFav && RemoveTodo(dispatch, data.todoID, "favtodo")
+                DeactivateTodo(dispatch, data.todoID, "todo")
+                data.isFav && DeactivateTodo(dispatch, data.todoID, "favtodo")
                 data.isFav && dispatch({ type: 'REMOVE_FROM_FAV_DATA', payload: data })
             }
             else if (type === "finishedtodo") {
                 dispatch({ type: 'REMOVE_FROM_FIN_DATA', payload: data })
-                RemoveTodo(dispatch, data.todoID, "finishedtodo")
+                DeactivateTodo(dispatch, data.todoID, "finishedtodo")
                 AddTodo(dispatch, data, data.userID)
             }
         } else {
@@ -390,5 +424,6 @@ export {
     ToggleFinished,
     FetchData,
     RemoveUser,
-    ActivateUser
+    ActivateUser,
+    DeactivateTodo
 }

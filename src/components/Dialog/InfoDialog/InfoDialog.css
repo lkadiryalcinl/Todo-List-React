@@ -1,0 +1,36 @@
+.info-container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.info-dialog-container {
+    
+}
+
+.info-dialog-top-container{
+    padding-top: 1rem;
+}
+
+.info-dialog-mid-container {
+    
+}
+
+.info-dialog-bottom-container {
+    position: absolute;
+    bottom: 1rem;
+    left: 1.5rem;
+    right: 1.5rem;
+    
+}
+
+.info-dialog-container-title{
+    background-color: #ED6C02 !important;
+    color: white !important;
+    width: 20vw !important;
+    padding: 0 !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+    display: flex;
+    justify-content: center !important;
+}
