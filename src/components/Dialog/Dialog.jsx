@@ -61,7 +61,7 @@ export default function TodoDialog({ dialog, changeDialog, dispatch, type, userI
                         }}
                         validationSchema={TodoValidation}
                         onSubmit={(values, { setSubmitting }) => {
-                            !type ? AddTodo(dispatch, values, userId, "todo/addTodo") : UpdateTodo(dispatch, values, data, "todo");
+                            !type ? AddTodo( values, userId) : UpdateTodo(values, data);
                             changeDialog(false);
                             setSubmitting(false);
                         }}

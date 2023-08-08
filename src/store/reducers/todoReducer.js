@@ -47,7 +47,6 @@ const todoReducer = (state = initialState, action) => {
                 favoritedData: state.favoritedData.filter(element => element.todoID !== action.payload.todoID)
             }
         case 'REMOVE_FROM_FIN_DATA':
-
             return {
                 ...state,
                 finishedData: state.finishedData.filter(element => element.todoID !== action.payload.todoID),

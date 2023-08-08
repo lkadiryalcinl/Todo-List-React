@@ -1,7 +1,6 @@
 .info-container {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
+    justify-content: center ;
+    align-items: center ;
 }
 
 .info-dialog-container {
@@ -27,7 +26,7 @@
 .info-dialog-container-title{
     background-color: #ED6C02 !important;
     color: white !important;
-    width: 20vw !important;
+    width: 30vw !important;
     padding: 0 !important;
     padding-top: 1rem !important;
     padding-bottom: 1rem !important;

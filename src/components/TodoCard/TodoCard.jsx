@@ -30,17 +30,14 @@ import './TodoCard.css'
 import AlertDialog from '../Dialog/AlertDialog/AlertDialog'
 import InfoDialog from '../Dialog/InfoDialog/InfoDialog'
 
-const TodoCard = ({ Todo, dispatch, userId, handleUpdateDialog }) => {
+const TodoCard = ({ Todo, dispatch, userId, handleUpdateDialog, handleAction }) => {
 
     const [openAlert, setOpenAlert] = React.useState(false);
     const [openInfo, setOpenInfo] = React.useState(false);
 
     const handleOption1Click = (Todo) => {
-        Todo.isFinished ?
-            DeactivateTodo(dispatch, Todo.todoID, "finishedtodo") :
-            Todo.isFav ?
-                DeactivateTodo(dispatch, Todo.todoID, "favtodo") :
-                DeactivateTodo(dispatch, Todo.todoID, "todo")
+        DeactivateTodo(Todo.todoID)
+        handleAction()
         setOpenAlert(false);
     };
 
@@ -74,7 +71,7 @@ const TodoCard = ({ Todo, dispatch, userId, handleUpdateDialog }) => {
                 >
                     <PriorityHigh
                         color={Todo.priorityType === "0" ? "success" : Todo.priorityType === "1" ? "warning" : "error"}
-                        
+
                     />
                 </Icon>}
             </Grid>
@@ -93,8 +90,9 @@ const TodoCard = ({ Todo, dispatch, userId, handleUpdateDialog }) => {
                             {!Todo.isFinished && <IconButton onClick={
                                 () => {
                                     Todo.isFav ?
-                                        ToggleFav(dispatch, Todo.todoID, "favtodo", userId) :
-                                        ToggleFav(dispatch, Todo.todoID, "todo", userId)
+                                        ToggleFav( Todo.todoID) :
+                                        ToggleFav(Todo.todoID)
+                                    handleAction()
                                 }
                             }>
                                 <Bookmark
@@ -103,6 +101,7 @@ const TodoCard = ({ Todo, dispatch, userId, handleUpdateDialog }) => {
                             </IconButton>}
                             {!Todo.isFinished && <IconButton onClick={() => {
                                 handleUpdateDialog(Todo.todoID)
+                                handleAction()
                             }}>
 
                                 <Edit />
@@ -118,11 +117,12 @@ const TodoCard = ({ Todo, dispatch, userId, handleUpdateDialog }) => {
                     title={
                         <>
                             <Checkbox
-                                onClick={() =>
+                                onClick={() => {
                                     Todo.isFinished ?
-                                        ToggleFinished(dispatch, Todo.todoID, "finishedtodo", Todo.isFav)
-                                        : ToggleFinished(dispatch, Todo.todoID, "todo", Todo.isFav)
-                                }
+                                        ToggleFinished( Todo.todoID)
+                                        : ToggleFinished(Todo.todoID)
+                                    handleAction()
+                                }}
                                 checked={Todo.isFinished}
                                 color={Todo.isFinished ? "success" : "warning"}
                             />

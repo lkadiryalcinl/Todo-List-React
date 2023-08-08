@@ -18,7 +18,7 @@ import {
 } from '@mui/lab'
 
 import './TodoBoard.css';
-import { GetTodoByID } from '../../utils/utils'
+import { GetTodoByID, FetchData } from '../../utils/utils'
 import { useDispatch, useSelector } from 'react-redux';
 import Dialog from '../Dialog/Dialog'
 import FlatList from 'flatlist-react'
@@ -30,10 +30,10 @@ export default function TodoBoard() {
     const dispatch = useDispatch();
     const userId = useSelector(state => state.user.userID)
 
-    const data = useSelector(state => state.todo.data)
-    const favoritedData = useSelector(state => state.todo.favoritedData)
-    const finishedData = useSelector(state => state.todo.finishedData)
-
+    const [data, setData] = React.useState([]);
+    const [favData, setFavData] = React.useState([]);
+    const [finData, setFinData] = React.useState([]);
+    const [userAction, setUserAction] = React.useState(false);
     const [updateTodoDialog, setUpdateTodoDialog] = React.useState(false);
     const [AddTodoDialog, setAddTodoDialog] = React.useState(false);
     const [info, setInfo] = React.useState(false);
@@ -57,7 +57,7 @@ export default function TodoBoard() {
     }
 
     const handleUpdateDialog = async (todoID) => {
-        todoID !== undefined ? await GetTodoByID(todoID, "todo").then((data) => {
+        todoID !== undefined ? await GetTodoByID(todoID).then((data) => {
             setSelectedTodo(data)
         }).then(() => {
             setUpdateTodoDialog(true)
@@ -65,13 +65,30 @@ export default function TodoBoard() {
             setUpdateTodoDialog(false)
     }
 
+    const handleAction = () => {
+        setUserAction(!userAction)
+    }
+
     const renderWhenEmpty = () => {
         return <div style={{ color: 'black', textAlign: 'center' }}>This List is Empty...</div>
     }
 
+    React.useEffect(() => {
+
+        const fetchTodos = async () => {
+            if (tabValue === '1')
+                setData(await FetchData(userId, "todo?UserId="))
+            else if (tabValue === '2')
+                setFavData(await FetchData(userId, "todo/favtodo/"))
+            else
+                setFinData(await FetchData(userId, "todo/finishedtodo/"))
+        }
+
+        fetchTodos();
+    }, [tabValue, userAction, userId])
+
     return (
         <>
-
             <Grid className='todo-board-container'>
                 <FilterAside
                     columnWidth={columnWidth}
@@ -113,6 +130,7 @@ export default function TodoBoard() {
                                             userId={userId}
                                             handleUpdateDialog={handleUpdateDialog}
                                             handleInfo={handleInfo}
+                                            handleAction={handleAction}
                                         />}
                                     renderWhenEmpty={renderWhenEmpty}
                                     displayGrid
@@ -132,7 +150,7 @@ export default function TodoBoard() {
                             </TabPanel>
                             <TabPanel value="2">
                                 <FlatList
-                                    list={favoritedData}
+                                    list={favData}
                                     renderItem={(Todo) =>
                                         <TodoCard
                                             key={Todo.todoID}
@@ -141,6 +159,7 @@ export default function TodoBoard() {
                                             userId={userId}
                                             handleUpdateDialog={handleUpdateDialog}
                                             handleInfo={handleInfo}
+                                            handleAction={handleAction}
                                         />}
                                     renderWhenEmpty={renderWhenEmpty}
                                     displayGrid
@@ -158,7 +177,7 @@ export default function TodoBoard() {
                             </TabPanel>
                             <TabPanel value="3">
                                 <FlatList
-                                    list={finishedData}
+                                    list={finData}
                                     renderItem={(Todo) =>
                                         <TodoCard
                                             key={Todo.todoID}
@@ -167,6 +186,7 @@ export default function TodoBoard() {
                                             userId={userId}
                                             handleUpdateDialog={handleUpdateDialog}
                                             handleInfo={handleInfo}
+                                            handleAction={handleAction}
                                         />}
                                     renderWhenEmpty={renderWhenEmpty}
                                     displayGrid

@@ -33,8 +33,8 @@ const InfoDialog = ({ open, setOpen, Todo }) => {
                 }}
             >
                 <Grid sx={{
-                    width: '20dvw',
-                    height: '40dvh',
+                    width: '30dvw',
+                    height: '50dvh',
                     alignItems: 'center',
                     display: 'flex',
                     flexDirection: 'column',
@@ -78,7 +78,7 @@ const InfoDialog = ({ open, setOpen, Todo }) => {
                             <Grid container>
                                 <Grid>
                                     <Typography sx={{
-                                        fontWeight: 'bold'
+                                        fontWeight: 'bold',
                                     }}>
                                         Priority Type :
                                     </Typography>
@@ -96,7 +96,8 @@ const InfoDialog = ({ open, setOpen, Todo }) => {
 
                             <Grid sx={{
                                 display:'flex',
-                                flexDirection:'row'
+                                flexDirection:'row',
+                                justifyContent:'space-evenly'
                             }}>
                                 <Grid container>
                                     <Grid>
