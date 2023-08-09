@@ -1,18 +1,17 @@
 .drawer-container {
-    width: 20vw !important;
+    width: 20vw ;
 }
 
 .drawer-top {
-    height: 10vh !important;
+    height: 5rem ;
     background-color: #ED6C02 !important;
-    display: flex !important;
-    flex-direction: column !important;
+    /* width: 20vw !important; */
     justify-content: center;
     align-items: center;
 }
 
 .drawer-content {
-    height: 90vh !important;
+    height: 100% !important;
     background-color: white !important;
     display: flex !important;
     flex-direction: column !important;

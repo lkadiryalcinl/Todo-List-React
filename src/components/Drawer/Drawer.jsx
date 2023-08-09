@@ -27,7 +27,7 @@ const DrawerComp = ({ openDrawer, setOpenDrawer }) => {
             }}
         >
             <Grid className='drawer-container'>
-                <Grid className='drawer-top'>
+                <Grid container className='drawer-top'>
                     <Typography className='drawer-top-title'>
                         Todo
                     </Typography>

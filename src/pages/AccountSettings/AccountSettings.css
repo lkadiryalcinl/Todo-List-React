@@ -1,28 +1,48 @@
-.account-container {
-    display: flex !important;
+.account-settings-container{
+    justify-content: center ;
+    align-items: center ;
     flex-direction: column !important;
-    justify-content: center !important;
-    align-items: center !important;
-    background: #ffdfc4 !important;
+    background: #ffdfc4 ;
     height: 92vh;
 }
 
-.account-top-title-container{
-    height: 10%;
-    width: 100%;
-    background: red;
-}
-
-.account-top-title{
+.account-container {
+    justify-content: center;
+    align-items: center;
     
 }
 
-.account-top-title-text{
-
+.left-container {
+    width: 15%;
+    height: 70vh;
+    background-color: whitesmoke;
 }
 
-.account-content-container{
-    height: 90%;
-    width: 100%;
-    background: purple;
+.right-container {
+    height: 70vh;
+    width: 60%;
+}
+
+.right-container-title {
+    height: 15%;
+    background-color: #ED6C02;
+}
+
+.right-container-content {
+    height: 85%;
+    background-color: white;
+}
+
+.account-form-style {
+    height: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.form-input-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center;
 }

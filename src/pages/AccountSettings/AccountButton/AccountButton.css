@@ -1,0 +1,31 @@
+.button-container {
+    width: 100% !important;
+    justify-content: left;
+    align-items: center;
+}
+
+.button-content-container{
+    width: auto;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-container:hover {
+    background-color: #ED6C0240 !important;
+}
+
+.button-container:focus {
+    background-color: #ed6c0220 !important;
+}
+
+.button-text-container {
+    color: black ;
+    cursor: default ;
+}
+
+.icon {
+    color: black;
+    width: auto;
+    height: auto;
+}

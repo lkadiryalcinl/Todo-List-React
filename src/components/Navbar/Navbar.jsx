@@ -18,33 +18,37 @@ export default function SearchAppBar() {
   const [openDrawer, setOpenDrawer] = React.useState(false)
 
   return (
-    <Box>
-      <AppBar
-        position="static"
-        className='navbar-container'
-      >
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color='inherit'
-            sx={{ mr: 2 }}
-            onClick={() => setOpenDrawer(!openDrawer)}
-          >
-            <MenuIcon
-            />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1 }}
-          >
-            TODO LIST
-          </Typography>
-        </Toolbar>
-        <Drawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
-      </AppBar>
-    </Box>
+    <>
+      <Box>
+        <AppBar
+          position="static"
+          className='navbar-container'
+        >
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color='inherit'
+              sx={{ mr: 2 }}
+              onClick={() => setOpenDrawer(!openDrawer)}
+            >
+              <MenuIcon
+              />
+            </IconButton>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1 }}
+            >
+              TODO LIST
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </Box>
+      <Drawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
+    </>
+
+
   );
 }

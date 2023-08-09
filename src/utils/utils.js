@@ -303,5 +303,6 @@ export {
     FetchData,
     RemoveUser,
     ActivateUser,
-    DeactivateTodo
+    DeactivateTodo,
+    GetUserByID
 }
