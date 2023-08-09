@@ -16,7 +16,7 @@ const AlertDialog = ({ title, description, open, setOpen, option1, option2 }) =>
             <DialogTitle
                 className='alert-container-top'
                 sx={{
-                    backgroundColor: '#ED6C02',
+                    backgroundColor: '#53469c',
                     color: 'white'
                 }}
             >{title}
@@ -36,7 +36,7 @@ const AlertDialog = ({ title, description, open, setOpen, option1, option2 }) =>
                             className='alert-content-bottom'
                             sx={{
                                 '&:hover': {
-                                    backgroundColor: '#ED6C0240',
+                                    backgroundColor: '#53469c',
                                     color: 'white'
                                 },
                             }}
@@ -44,7 +44,7 @@ const AlertDialog = ({ title, description, open, setOpen, option1, option2 }) =>
                             <Typography
                                 className='alert-content-bottom-text'
                                 sx={{
-                                    color: '#ED6C02',
+                                    color: '#53469c',
                                 }}
                             >
                                 OK
@@ -55,7 +55,7 @@ const AlertDialog = ({ title, description, open, setOpen, option1, option2 }) =>
                             className='alert-content-bottom'
                             sx={{
                                 '&:hover': {
-                                    backgroundColor: '#ED6C0240',
+                                    backgroundColor: '#53469c',
                                     color: 'white'
                                 },
                             }}
@@ -63,7 +63,7 @@ const AlertDialog = ({ title, description, open, setOpen, option1, option2 }) =>
                             <Typography
                                 className='alert-content-bottom-text'
                                 sx={{
-                                    color: '#ED6C02'
+                                    color: '#53469c'
                                 }}
                             >
                                 Cancel

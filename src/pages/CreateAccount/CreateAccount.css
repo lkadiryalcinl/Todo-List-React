@@ -4,13 +4,13 @@
     justify-content: center !important;
     height: 100vh !important;
     width: 100vw !important;
-    background-color: #ffdfc4 !important;
+    background-color: #f0ecff !important;
 }
 
 .form-header-container {
     height: 10vh !important;
     width: 30vw !important;
-    background-color: #ED6C02 !important;
+    background-color: #53469c !important;
     display: flex !important;
     border-top-left-radius: 20px !important;
     border-top-right-radius: 20px !important;
@@ -24,7 +24,7 @@
     align-items: center !important;
     justify-content: space-evenly !important;
     padding: 8 !important;
-    border: 4px solid #ED6C02 !important;
+    border: 4px solid #53469c !important;
     border-bottom-left-radius: 20px !important;
     border-bottom-right-radius: 20px !important;
     background-color: whitesmoke !important;
@@ -42,7 +42,7 @@
 .form-button {
         margin-top: 16px !important;
         color: white !important;
-        background-color: #ED6C02 !important;
+        background-color: #53469c !important;
 }
 
 .link {

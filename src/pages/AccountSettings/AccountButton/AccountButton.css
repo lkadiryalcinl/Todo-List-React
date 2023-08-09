@@ -12,11 +12,11 @@
 }
 
 .button-container:hover {
-    background-color: #ED6C0240 !important;
+    background-color: #53469c40 !important;
 }
 
 .button-container:focus {
-    background-color: #ed6c0220 !important;
+    background-color: #53469c20 !important;
 }
 
 .button-text-container {

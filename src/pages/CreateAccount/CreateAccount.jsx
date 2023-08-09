@@ -70,7 +70,6 @@ const Login = () => {
               </Grid>
               <Grid className='form-style'>
                 <TextField
-                  color={errors.username && values.username.length !== 0 ? "error" : "warning"}
                   label={errors.username && values.username.length !== 0 ? errors.username : 'Username'}
                   type="text"
                   name="username"
@@ -80,7 +79,6 @@ const Login = () => {
                 />
 
                 <TextField
-                  color={errors.email && values.email.length !== 0 ? "error" : "warning"}
                   label={errors.email && values.email.length !== 0 ? errors.email : 'E-mail'}
                   type="text"
                   name="email"
@@ -91,7 +89,6 @@ const Login = () => {
                 />
 
                 <TextField
-                  color={errors.password && values.password.length !== 0 ? "error" : "warning"}
                   label={errors.password && values.password.length !== 0 ? errors.password : 'Password'}
                   type="password"
                   name="password"
@@ -102,7 +99,6 @@ const Login = () => {
                 />
 
                 <TextField
-                  color={errors.repass && values.repass.length !== 0 ? "error" : "warning"}
                   label={errors.repass && values.repass.length !== 0 ? errors.repass : 'Password Again'}
                   type="password"
                   name="repass"

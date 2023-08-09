@@ -11,11 +11,11 @@ export default function App() {
   const queryClient = new QueryClient()
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter >
+    <BrowserRouter >
+      <QueryClientProvider client={queryClient}>
         <Routes />
-      </BrowserRouter>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </BrowserRouter>
   );
 }
 

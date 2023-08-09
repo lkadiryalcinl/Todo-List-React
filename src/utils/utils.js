@@ -96,7 +96,6 @@ const AddTodo = async (data, userID) => {
         })
 
         if (response.ok) {
-
         } else {
             console.error('Todo Add Failed:', response.status, response.statusText);
         }
@@ -138,7 +137,6 @@ const UpdateTodo = async (values, data) => {
             },
             body: JSON.stringify(body)
         })
-
 
         if (response.ok) {
 
@@ -284,6 +282,7 @@ const FetchData = async (userId, type) => {
         const data = await response.json()
 
         if (response.ok) {
+            
             return data;
         } else {
             console.error('Todo Fetch Failed:', response.status, response.statusText);

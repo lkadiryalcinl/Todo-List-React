@@ -29,10 +29,11 @@ import Search from '../Search/Search';
 export default function TodoBoard() {
     const dispatch = useDispatch();
     const userId = useSelector(state => state.user.userID)
+    const data = useSelector(state => state.todo.data)
+    const favoritedData = useSelector(state => state.todo.favoritedData)
+    const finishedData = useSelector(state => state.todo.finishedData)
 
-    const [data, setData] = React.useState([]);
-    const [favData, setFavData] = React.useState([]);
-    const [finData, setFinData] = React.useState([]);
+    console.log(data);
     const [userAction, setUserAction] = React.useState(false);
     const [updateTodoDialog, setUpdateTodoDialog] = React.useState(false);
     const [AddTodoDialog, setAddTodoDialog] = React.useState(false);
@@ -77,13 +78,13 @@ export default function TodoBoard() {
 
         const fetchTodos = async () => {
             if (tabValue === '1')
-                setData(await FetchData(userId, "todo?UserId="))
+                dispatch({ type: 'ADD_TODO', payload: userId })
             else if (tabValue === '2')
-                setFavData(await FetchData(userId, "todo/favtodo/"))
+                dispatch({ type: 'ADD_FAV', payload: userId })
             else
-                setFinData(await FetchData(userId, "todo/finishedtodo/"))
+                dispatch({ type: 'ADD_FIN', payload: userId })
         }
-
+        
         fetchTodos();
     }, [tabValue, userAction, userId])
 
@@ -121,7 +122,7 @@ export default function TodoBoard() {
                         }}>
                             <TabPanel value="1" >
                                 <FlatList
-                                    list={data}
+                                    list={[]}
                                     renderItem={(Todo) =>
                                         <TodoCard
                                             key={Todo.todoID}
@@ -150,7 +151,7 @@ export default function TodoBoard() {
                             </TabPanel>
                             <TabPanel value="2">
                                 <FlatList
-                                    list={favData}
+                                    list={[]}
                                     renderItem={(Todo) =>
                                         <TodoCard
                                             key={Todo.todoID}
@@ -177,7 +178,7 @@ export default function TodoBoard() {
                             </TabPanel>
                             <TabPanel value="3">
                                 <FlatList
-                                    list={finData}
+                                    list={[]}
                                     renderItem={(Todo) =>
                                         <TodoCard
                                             key={Todo.todoID}
@@ -225,7 +226,7 @@ export default function TodoBoard() {
             <Grid
                 className='todo-add-button'
             >
-                <IconButton style={{ backgroundColor: '#ED6C02' }} sx={{ marginY: 2, marginRight: '3%' }}>
+                <IconButton style={{ backgroundColor: '#53469c' }} sx={{ marginY: 2, marginRight: '3%' }}>
                     <Add onClick={() => {
                         handleAddDialog()
                     }}

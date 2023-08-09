@@ -1,17 +1,17 @@
 import * as React from 'react';
 
-import { 
-  Grid, 
-  TextField, 
-  Button, 
-  Typography, 
-  Link, 
-  Alert, 
+import {
+  Grid,
+  TextField,
+  Button,
+  Typography,
+  Link,
+  Alert,
   AlertTitle,
 } from '@mui/material';
 
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import { Lock } from '@mui/icons-material';
 import { HandleAuth, ActivateUser } from '../../utils/utils';
@@ -28,6 +28,7 @@ const Login = () => {
   const [openAlert, setOpenAlert] = React.useState(false)
   const [again, setAgain] = React.useState(false)
 
+  const userID = useSelector(state => state.user.userID)
   const handleOption1Click = () => {
     ActivateUser(dispatch, navigate, UserID)
     setOpenAlert(false);
@@ -42,6 +43,11 @@ const Login = () => {
       setOpenAlert(!openAlert)
   }, [alert, again])
 
+  React.useEffect(() => {
+    if (userID !== -1)
+      navigate('/dashboard')
+  }, [])
+
   return (
 
     <Grid container className='login-page-container'>
@@ -55,13 +61,7 @@ const Login = () => {
         <AlertTitle>{alert === "USER_FOUND" ? "Success" : alert === "USER_DEACTIVE" ? "User Deactive" : "This user not found"}</AlertTitle>
         <strong>{alert === "USER_FOUND" ? "success" : alert === "USER_DEACTIVE" ? "You need to activate your account" : "Please check username or password"}</strong>
       </Alert>}
-      <Grid style={{
-        backgroundImage:'url("https://previews.123rf.com/images/veeksegal/veeksegal1607/veeksegal160700013/60256947-vector-sketch-to-do-list-black-on-white-background.jpg")',
-        backgroundSize:'contain',
-        backgroundRepeat:'no-repeat',
-        width:'30vw',
-        height:'80vh'
-      }}/>
+      <Grid className='image-container' />
       <Formik
         initialValues={{
           username: "",
@@ -113,7 +113,6 @@ const Login = () => {
               </Grid>
               <Grid container className='form-style'>
                 <TextField
-                  color={errors.username && values.username.length !== 0 ? "error" : "warning"}
                   label={errors.username && values.username.length !== 0 ? errors.username : 'Username'}
                   type="text"
                   name="username"
@@ -123,7 +122,6 @@ const Login = () => {
                 />
 
                 <TextField
-                  color={errors.password && values.password.length !== 0 ? "error" : "warning"}
                   label={errors.password && values.password.length !== 0 ? errors.password : 'Password'}
                   type="password"
                   name="password"

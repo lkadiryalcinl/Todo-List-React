@@ -7,7 +7,7 @@ const LoginSchema = Yup.object().shape({
         .max(20, 'Too Long!')
         .required('Required'),
     password: Yup.string()
-        .min(5, 'Too Short!')
+        .min(8, 'Too Short!')
         .max(20, 'Too Long!')
         .required('Required'),
 });
@@ -46,8 +46,40 @@ const TodoValidation = Yup.object().shape({
 
 })
 
+const UserUpdateValid = Yup.object().shape({
+    username: Yup.string()
+        .min(4, 'Too Short!')
+        .max(20, 'Too Long!')
+        .required('Required'),
+    email: Yup.string()
+        .email('Invalid email')
+        .required('Required'),
+    password: Yup.string()
+        .min(8, 'Too Short!')
+        .max(20, 'Too Long!')
+        .required('Required'),
+
+})
+
+const ChangePassword = Yup.object().shape({
+    oldpass: Yup.string()
+        .min(8, 'Too Short!')
+        .max(20, 'Too Long!')
+        .required('Required'),
+    newpass: Yup.string()
+        .min(8, 'Too Short!')
+        .max(20, 'Too Long!')
+        .required('Required'),
+    passagain: Yup.string()
+        .min(8, 'Too Short!')
+        .max(20, 'Too Long!')
+        .required('Required')
+})
+
 export {
     LoginSchema,
     SignUpSchema,
-    TodoValidation
+    TodoValidation,
+    UserUpdateValid,
+    ChangePassword
 }

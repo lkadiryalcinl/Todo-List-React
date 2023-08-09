@@ -35,3 +35,15 @@
 .view-control-container {   
     display: flex !important;
 }
+
+.radio-button-color {
+    color: #53469c !important;
+}
+
+.column-control-color {
+    color: #53469c !important;
+}
+
+.default{
+    color: default !important;
+}

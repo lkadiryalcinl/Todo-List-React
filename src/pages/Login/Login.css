@@ -1,39 +1,39 @@
 .login-page-container {
-    align-items: center ;
-    justify-content: center ;
+    align-items: center;
+    justify-content: center;
     height: 100vh;
     width: 100vw;
-    background-color: #ffdfc4 ;
+    background-color: #f0ecff;
 }
 
 .form-header-container {
-    height: 10vh ;
-    width: 30vw ;
-    background-color: #ED6C02 ;
-    border-top-left-radius: 20px ;
-    border-top-right-radius: 20px ;
+    height: 10vh;
+    width: 30vw;
+    background-color: #53469c;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 }
 
 .form-content-container {
-    align-items: center ;
-    justify-content: space-evenly ;
-    padding: 8 ;
-    border: 4px solid #ED6C02 ;
-    border-bottom-left-radius: 20px ;
-    border-bottom-right-radius: 20px ;
-    background-color: whitesmoke ;
-    height:50vh;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 8;
+    border: 4px solid #53469c;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: whitesmoke;
+    height: 50vh;
 }
 
 .form-style {
-        align-items: center !important;
-        justify-content: center !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 .form-button {
-        margin-top: 16px !important;
-        color: white !important;
-        background-color: #ED6C02 !important;
+    margin-top: 16px !important;
+    color: white !important;
+    background-color: #53469c !important;
 }
 
 .link {
@@ -43,4 +43,14 @@
 
 .link:hover {
     color: #000000aa !important;
+}
+
+.image-container {
+    display: flex;
+    background-image: url("https://cdn.pixabay.com/photo/2016/03/31/19/50/checklist-1295319_1280.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 30vw;
+    height: 80vh;
+    align-items: center
 }

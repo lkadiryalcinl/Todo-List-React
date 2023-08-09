@@ -1,20 +1,23 @@
-.account-settings-container{
-    justify-content: center ;
-    align-items: center ;
-    flex-direction: column !important;
-    background: #ffdfc4 ;
+.account-settings-container {
+    justify-content: center;
+    align-items: center;
+    background: #f0ecff;
     height: 92vh;
 }
 
 .account-container {
-    justify-content: center;
-    align-items: center;
-    
+    display: flex;
+    width: 80%;
+    height: 80%;
+    background-color: whitesmoke;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+
 }
 
 .left-container {
-    width: 15%;
-    height: 70vh;
+    width: 25%;
+    /* height: 70vh; */
     background-color: whitesmoke;
 }
 
@@ -25,24 +28,44 @@
 
 .right-container-title {
     height: 15%;
-    background-color: #ED6C02;
+    background-color: #53469c;
 }
 
 .right-container-content {
     height: 85%;
-    background-color: white;
 }
 
 .account-form-style {
-    height: 100%;
-    display: flex !important;
+    display: flex;
     flex-direction: column !important;
+    height: 100%;
+    padding: 10%;
     align-items: center;
-    justify-content: space-evenly;
+    border: 1px solid black;
 }
 
 .form-input-container {
     display: flex !important;
     flex-direction: column !important;
     align-items: center;
+}
+
+.panel-container-style {
+    display: flex;
+    background-color: white;
+    width: 100%;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-user-button-container{
+    justify-content: center;
+    padding: 5%;
+}
+
+.save-button-container{
+    justify-content: center;
+    padding: 5%;
 }

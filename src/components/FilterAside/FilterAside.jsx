@@ -45,7 +45,7 @@ const SortCard = ({ radioSortValue, setRadioSortValue }) => {
                     <FormControlLabel
                         value="title"
                         control={<Radio
-                            color='warning'
+                            className='radio-button-color'
                         />}
                         label="Title"
                         className='radio-text'
@@ -53,7 +53,7 @@ const SortCard = ({ radioSortValue, setRadioSortValue }) => {
                     <FormControlLabel
                         value="isFav"
                         control={<Radio
-                            color='warning'
+                            className='radio-button-color'
                         />}
                         label="Marked"
                         className='radio-text'
@@ -62,7 +62,7 @@ const SortCard = ({ radioSortValue, setRadioSortValue }) => {
                     <FormControlLabel
                         value="priorityType"
                         control={<Radio
-                            color='warning'
+                            className='radio-button-color'
                         />}
                         label="Priority"
                         className='radio-text'
@@ -71,7 +71,7 @@ const SortCard = ({ radioSortValue, setRadioSortValue }) => {
                     <FormControlLabel
                         value="dateCreated"
                         control={<Radio
-                            color='warning'
+                            className='radio-button-color'
                         />}
                         label="Created Date"
                         className='radio-text'
@@ -113,7 +113,7 @@ const OrderCard = ({ radioOrderValue, setRadioOrderValue }) => {
                     <FormControlLabel
                         value={''}
                         control={<Radio
-                            color='warning'
+                            className='radio-button-color'
                         />}
                         label="Ascending"
                         className='radio-text'
@@ -122,7 +122,7 @@ const OrderCard = ({ radioOrderValue, setRadioOrderValue }) => {
                     <FormControlLabel
                         value={'true'}
                         control={<Radio
-                            color='warning'
+                            className='radio-button-color'
                         />}
                         label="Descending"
                         className='radio-text'
@@ -139,12 +139,12 @@ const FilterAside = ({ radioSortValue, setRadioSortValue, radioOrderValue, setRa
     return (
         <Grid className='todo-board-filter-container'>
             <Grid className='view-control-container'>
-                <IconButton color={columnWidth === "40vw" ? 'warning' : 'default'} onClick={() => {
+                <IconButton className={columnWidth === "40vw" ? 'column-control-color' : 'default'} onClick={() => {
                     setColumnWidth('40vw')
                 }}>
                     <ViewHeadlineOutlined />
                 </IconButton>
-                <IconButton color={columnWidth === "30vw" ? 'warning' : 'default'} onClick={() => {
+                <IconButton className={columnWidth === "30vw" ? 'column-control-color' : 'default'} onClick={() => {
                     setColumnWidth('30vw')
                 }}>
                     <GridViewOutlined />
