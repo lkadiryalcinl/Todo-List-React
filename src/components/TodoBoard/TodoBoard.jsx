@@ -42,13 +42,13 @@ export default function TodoBoard() {
     const [info, setInfo] = useState(false);
     const [tabValue, setTabValue] = useState('1');
     
-    const [userAction, setUserAction] = useState(false);
+    const [userAction, setUserAction] = useState("");
     const [columnWidth, setColumnWidth] = useState('40vw');
 
     const [radioSortValue, setRadioSortValue] = useState('title');
     const [radioOrderValue, setRadioOrderValue] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
-
+    
     const handleTabValue = (event, newValue) => {
         setTabValue(newValue);
     };
@@ -70,13 +70,10 @@ export default function TodoBoard() {
             setUpdateTodoDialog(false)
     }
 
-    const handleAction = () => {
-        setUserAction(!userAction)
-    }
-
     const renderWhenEmpty = () => {
         return <div style={{ color: 'black', textAlign: 'center' }}>This List is Empty...</div>
     }
+
     const fetchTodos = async () => {
         if (tabValue === '1')
             setData(await FetchData(userId, "todo?UserId="))
@@ -87,8 +84,6 @@ export default function TodoBoard() {
     }
 
     useEffect(() => {
-
-
         fetchTodos();
     }, [tabValue, userAction, userId])
 
@@ -135,7 +130,7 @@ export default function TodoBoard() {
                                             userId={userId}
                                             handleUpdateDialog={handleUpdateDialog}
                                             handleInfo={handleInfo}
-                                            handleAction={handleAction}
+                                            setUserAction={setUserAction}
                                         />}
                                     renderWhenEmpty={renderWhenEmpty}
                                     displayGrid
@@ -164,7 +159,7 @@ export default function TodoBoard() {
                                             userId={userId}
                                             handleUpdateDialog={handleUpdateDialog}
                                             handleInfo={handleInfo}
-                                            handleAction={handleAction}
+                                            setUserAction={setUserAction}
                                         />}
                                     renderWhenEmpty={renderWhenEmpty}
                                     displayGrid
@@ -191,7 +186,7 @@ export default function TodoBoard() {
                                             userId={userId}
                                             handleUpdateDialog={handleUpdateDialog}
                                             handleInfo={handleInfo}
-                                            handleAction={handleAction}
+                                            setUserAction={setUserAction}
                                         />}
                                     renderWhenEmpty={renderWhenEmpty}
                                     displayGrid

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState } from 'react'
 
 import {
     DeactivateTodo,
@@ -30,15 +30,16 @@ import './TodoCard.css'
 import AlertDialog from '../Dialog/AlertDialog/AlertDialog'
 import InfoDialog from '../Dialog/InfoDialog/InfoDialog'
 
-const TodoCard = ({ Todo, dispatch, userId, handleUpdateDialog, handleAction }) => {
+const TodoCard = ({ Todo, handleUpdateDialog, setUserAction, userAction }) => {
 
-    const [openAlert, setOpenAlert] = React.useState(false);
-    const [openInfo, setOpenInfo] = React.useState(false);
+    const [openAlert, setOpenAlert] = useState(false);
+    const [openInfo, setOpenInfo] = useState(false);
 
     const handleOption1Click = (Todo) => {
         DeactivateTodo(Todo.todoID)
-        handleAction()
         setOpenAlert(false);
+        if (setUserAction)
+            setUserAction(userAction + 1)
     };
 
     const handleOption2Click = () => {
@@ -90,9 +91,10 @@ const TodoCard = ({ Todo, dispatch, userId, handleUpdateDialog, handleAction }) 
                             {!Todo.isFinished && <IconButton onClick={
                                 () => {
                                     Todo.isFav ?
-                                        ToggleFav( Todo.todoID) :
+                                        ToggleFav(Todo.todoID) :
                                         ToggleFav(Todo.todoID)
-                                    handleAction()
+                                    if (setUserAction)
+                                        setUserAction(userAction + 1)
                                 }
                             }>
                                 <Bookmark
@@ -101,7 +103,8 @@ const TodoCard = ({ Todo, dispatch, userId, handleUpdateDialog, handleAction }) 
                             </IconButton>}
                             {!Todo.isFinished && <IconButton onClick={() => {
                                 handleUpdateDialog(Todo.todoID)
-                                handleAction()
+                                if (setUserAction)
+                                    setUserAction(userAction + 1)
                             }}>
 
                                 <Edit />
@@ -119,9 +122,10 @@ const TodoCard = ({ Todo, dispatch, userId, handleUpdateDialog, handleAction }) 
                             <Checkbox
                                 onClick={() => {
                                     Todo.isFinished ?
-                                        ToggleFinished( Todo.todoID)
+                                        ToggleFinished(Todo.todoID)
                                         : ToggleFinished(Todo.todoID)
-                                    handleAction()
+                                    if (setUserAction)
+                                        setUserAction(userAction + 1)
                                 }}
                                 checked={Todo.isFinished}
                                 color={Todo.isFinished ? "success" : "warning"}

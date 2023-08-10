@@ -1,4 +1,4 @@
-import * as React from 'react'
+import {useEffect} from 'react'
 import { Grid } from '@mui/material';
 import Navbar from '../../components/Navbar/Navbar'
 import TodoBoard from '../../components/TodoBoard/TodoBoard';
@@ -11,10 +11,10 @@ const Dashboard = () => {
     const userId = useSelector(state => state.user.userID)
     const navigate = useNavigate();
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (userId === -1)
             navigate('/')
-    }, [])
+    }, [navigate,userId])
     
     return (
         <Grid className='dashboard-page-container'>

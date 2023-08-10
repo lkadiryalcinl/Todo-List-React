@@ -61,7 +61,7 @@ const UserUpdateValid = Yup.object().shape({
 
 })
 
-const ChangePassword = Yup.object().shape({
+const ChangePasswordValid = Yup.object().shape({
     oldpass: Yup.string()
         .min(8, 'Too Short!')
         .max(20, 'Too Long!')
@@ -70,10 +70,9 @@ const ChangePassword = Yup.object().shape({
         .min(8, 'Too Short!')
         .max(20, 'Too Long!')
         .required('Required'),
-    passagain: Yup.string()
-        .min(8, 'Too Short!')
-        .max(20, 'Too Long!')
-        .required('Required')
+    passagain:Yup.string()
+    .oneOf([Yup.ref('newpass'), null], 'Passwords must match')
+    
 })
 
 export {
@@ -81,5 +80,5 @@ export {
     SignUpSchema,
     TodoValidation,
     UserUpdateValid,
-    ChangePassword
+    ChangePasswordValid
 }

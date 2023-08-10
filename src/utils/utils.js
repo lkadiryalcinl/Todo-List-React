@@ -236,6 +236,62 @@ const GetUserByID = async (UserID) => {
     }
 }
 
+const ChangePassword = async (passData, UserID) => {
+
+    const body = {
+        userID: UserID,
+        oldPassword: passData.oldpass,
+        newPassword: passData.newpass
+    }
+
+    try {
+        const response = await fetch(`https://localhost:44389/api/auth/ChangePassword`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body)
+        });
+        const res = await response.json()
+
+        if (response.ok) {
+            return res;
+        } else {
+            console.error('Kullanıcı bulunamadı: ', response.status, response.statusText);
+        }
+    } catch (error) {
+        console.error('İstek gönderilirken bir hata oluştu:', error.message);
+    }
+}
+
+const EditUser = async (userData, UserID) => {
+    console.log(userData);
+    const body = {
+        userID: UserID,
+        username: userData.username,
+        email: userData.email,
+        confirmPassword: userData.password
+    }
+
+    try {
+        const response = await fetch(`https://localhost:44389/api/auth/EditUser`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body)
+        });
+        const res = await response.json()
+        if (response.ok) {
+            return res;
+        } else {
+            console.error('Kullanıcı bulunamadı: ', response.status, response.statusText);
+        }
+    } catch (error) {
+        console.error('İstek gönderilirken bir hata oluştu:', error.message);
+    }
+}
+
 const HandleAuth = async (navigate, dispatch, loginData, type) => {
     try {
         const response = await fetch(`https://localhost:44389/api/auth/${type}`, {
@@ -282,7 +338,7 @@ const FetchData = async (userId, type) => {
         const data = await response.json()
 
         if (response.ok) {
-            
+
             return data;
         } else {
             console.error('Todo Fetch Failed:', response.status, response.statusText);
@@ -303,5 +359,7 @@ export {
     RemoveUser,
     ActivateUser,
     DeactivateTodo,
-    GetUserByID
+    GetUserByID,
+    ChangePassword,
+    EditUser
 }

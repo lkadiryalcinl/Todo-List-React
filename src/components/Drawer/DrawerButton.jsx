@@ -1,4 +1,4 @@
-import * as React from 'react'
+import {useState} from 'react'
 
 import {
     Grid,
@@ -16,7 +16,7 @@ import './DrawerButton.css'
 const DrawerButton = ({ title, href, logout, icon }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [openAlert, setOpenAlert] = React.useState(false)
+    const [openAlert, setOpenAlert] = useState(false)
 
     const handleOption1Click = () => {
         navigate(href)

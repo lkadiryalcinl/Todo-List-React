@@ -1,4 +1,5 @@
 import {
+    useEffect,
     useState
 } from 'react'
 
@@ -22,30 +23,47 @@ import {
 } from '@mui/lab'
 import { Formik } from 'formik';
 
-import { ChangePassword, UserUpdateValid } from '../../validation/validation';
+import { ChangePasswordValid, UserUpdateValid } from '../../validation/validation';
 import Navbar from '../../components/Navbar/Navbar'
 import AlertDialog from '../../components/Dialog/AlertDialog/AlertDialog';
+import { GetUserByID, RemoveUser, ChangePassword, Edit, EditUser } from '../../utils/utils'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 
 
 const AccountSettings = () => {
     const [tabValue, setTabValue] = useState('1');
     const [openAlert, setOpenAlert] = useState(false);
-    const [alert, setAlert] = useState('');
+    const [alert, setAlert] = useState("");
+    const [count, setCount] = useState(0);
+
+    const user = useSelector(state => state.user.user)
+    const userId = useSelector(state => state.user.userID)
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleTabValue = (event, newValue) => {
         setTabValue(newValue);
     };
 
     const handleOption1Click = () => {
-
+        RemoveUser(dispatch, navigate, userId)
         setOpenAlert(false);
     };
 
     const handleOption2Click = () => {
-
         setOpenAlert(false);
     };
+
+    const fetchUser = async () => {
+        const fetchedUser = await GetUserByID(userId);
+        dispatch({ type: "SET_USER", payload: fetchedUser })
+    }
+
+    useEffect(() => {
+        fetchUser();
+    }, [count,dispatch])
 
     return (
         <>
@@ -66,14 +84,15 @@ const AccountSettings = () => {
                             <TabPanel value="1" >
                                 <Formik
                                     initialValues={{
-                                        username: "",
-                                        email: "",
+                                        username: user?.username,
+                                        email: user?.email,
                                         password: "",
                                     }}
                                     validationSchema={UserUpdateValid}
-                                    onSubmit={(values, { setSubmitting }) => {
-                                        setAlert('USER_CHANGED')
-                                        console.log(values);
+                                    onSubmit={async (values, { setSubmitting }) => {
+                                        const res = await EditUser(values, userId)
+                                        setCount(count + 1)
+                                        setAlert(res)
                                         setSubmitting(false)
                                     }}
                                 >
@@ -95,7 +114,7 @@ const AccountSettings = () => {
                                                 </Typography>
                                                 <TextField
                                                     className='account-form-input'
-                                                    label={errors.username && values.username.length !== 0 ? errors.username : 'Username'}
+                                                    label={errors.username ? errors.username : 'Username'}
                                                     type="text"
                                                     name="username"
                                                     onChange={handleChange}
@@ -105,7 +124,7 @@ const AccountSettings = () => {
 
                                                 <TextField
                                                     className='account-form-input'
-                                                    label={errors.email && values.email.length !== 0 ? errors.email : 'E-mail'}
+                                                    label={errors.email ? errors.email : 'E-mail'}
                                                     type="text"
                                                     name="email"
                                                     onChange={handleChange}
@@ -115,7 +134,7 @@ const AccountSettings = () => {
 
                                                 <TextField
                                                     className='account-form-input'
-                                                    label={errors.password && values.password.length !== 0 ? errors.password : 'Confirm Password'}
+                                                    label={errors.password ? errors.password : 'Confirm Password'}
                                                     type="password"
                                                     name="password"
                                                     onChange={handleChange}
@@ -149,8 +168,10 @@ const AccountSettings = () => {
                                         newpass: "",
                                         passagain: ""
                                     }}
-                                    validationSchema={ChangePassword}
-                                    onSubmit={(values, { setSubmitting }) => {
+                                    validationSchema={ChangePasswordValid}
+                                    onSubmit={async (values, { setSubmitting }) => {
+                                        const res = await ChangePassword(values, userId)
+                                        
                                         setSubmitting(false)
                                     }}
                                 >
@@ -227,8 +248,8 @@ const AccountSettings = () => {
                 option1={handleOption1Click}
                 option2={handleOption2Click}
             />
-            {alert.length !== 0 && <Alert
-                severity={alert === "USER_CHANGED" ? "success" : "warning"}
+            {alert?.length !== 0 && <Alert
+                severity={alert === "Success" ? "success" : "warning"}
                 style={{
                     position: 'absolute',
                     top: '5%',
@@ -236,8 +257,8 @@ const AccountSettings = () => {
                     left: '40%'
                 }}
             >
-                <AlertTitle>{alert === "USER_CHANGED" ? "Success" : "Warning"}</AlertTitle>
-                <strong>{alert === "USER_CHANGED" ? "The user succesfully updated." : "An error occourd."}</strong>
+                <AlertTitle>{alert === "Success" ? "Success" : alert === "PasswordWrong" ? "Password Wrong" : "Warning"}</AlertTitle>
+                <strong>{alert === "Success" ? "The user succesfully updated." : alert === "PasswordWrong" ? "The password you typed is wrong" : "E-mail or Username taken."}</strong>
             </Alert>}
         </>
     )

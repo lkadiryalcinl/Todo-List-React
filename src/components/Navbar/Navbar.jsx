@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useState} from 'react';
 import {
   AppBar,
   Box,
@@ -15,7 +15,7 @@ import Drawer from '../Drawer/Drawer';
 import './Navbar.css'
 
 export default function SearchAppBar() {
-  const [openDrawer, setOpenDrawer] = React.useState(false)
+  const [openDrawer, setOpenDrawer] = useState(false)
 
   return (
     <>

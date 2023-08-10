@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useEffect } from 'react';
 
 import {
   Grid,
@@ -23,10 +23,10 @@ import './Login.css'
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [alert, setAlert] = React.useState("");
-  const [UserID, setUserID] = React.useState(-1)
-  const [openAlert, setOpenAlert] = React.useState(false)
-  const [again, setAgain] = React.useState(false)
+  const [alert, setAlert] = useState("");
+  const [UserID, setUserID] = useState(-1)
+  const [openAlert, setOpenAlert] = useState(false)
+  const [again, setAgain] = useState(false)
 
   const userID = useSelector(state => state.user.userID)
   const handleOption1Click = () => {
@@ -38,15 +38,15 @@ const Login = () => {
     setOpenAlert(!openAlert);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (alert === "USER_DEACTIVE")
       setOpenAlert(!openAlert)
-  }, [alert, again])
+  }, [openAlert,alert, again])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (userID !== -1)
       navigate('/dashboard')
-  }, [])
+  }, [navigate,userID])
 
   return (
 
