@@ -44,13 +44,3 @@
 .link:hover {
     color: #000000aa !important;
 }
-
-.image-container {
-    display: flex;
-    background-image: url("https://cdn.pixabay.com/photo/2016/03/31/19/50/checklist-1295319_1280.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 30vw;
-    height: 80vh;
-    align-items: center
-}
