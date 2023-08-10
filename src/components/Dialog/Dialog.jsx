@@ -3,7 +3,6 @@ import { Formik } from 'formik';
 
 import {
     Grid,
-    IconButton,
     TextField,
     InputLabel,
     OutlinedInput,
@@ -16,6 +15,7 @@ import {
     DialogActions,
     Dialog,
     Button,
+    Icon
 } from '@mui/material';
 
 import DatePicker, { registerLocale } from "react-datepicker";
@@ -37,7 +37,7 @@ export default function TodoDialog({ dialog, changeDialog, dispatch, type, userI
     }
 
     return (
-        <React.Fragment>
+        <Grid className='dialog-container'>
             <Dialog
                 fullWidth={true}
                 open={dialog}
@@ -62,7 +62,7 @@ export default function TodoDialog({ dialog, changeDialog, dispatch, type, userI
                         }}
                         validationSchema={TodoValidation}
                         onSubmit={(values, { setSubmitting }) => {
-                            !type ? AddTodo( values, userId) : UpdateTodo(values, data);
+                            !type ? AddTodo(values, userId) : UpdateTodo(values, data);
                             changeDialog(false);
                             setSubmitting(false);
                         }}
@@ -102,7 +102,7 @@ export default function TodoDialog({ dialog, changeDialog, dispatch, type, userI
 
                                 <FormControl>
 
-                                    <InputLabel id="demo-multiple-name-label">Priority Type</InputLabel>
+                                    <InputLabel>Priority Type</InputLabel>
                                     <Select
                                         name="priorityType"
                                         placeholder='Priority Type'
@@ -151,9 +151,16 @@ export default function TodoDialog({ dialog, changeDialog, dispatch, type, userI
                                     />
                                 </Grid>
                                 <Grid container className='icon-button-container'>
-                                    <IconButton type="submit" disabled={isSubmitting} onClick={handleSubmit}>
-                                        <Add/>
-                                    </IconButton>
+                                    <Button container className='icon-button'>
+                                        <Icon
+                                            type="submit"
+                                            disabled={isSubmitting}
+                                            onClick={handleSubmit}
+                                            className='icon'
+                                        >
+                                            <Add />
+                                        </Icon>
+                                    </Button>
                                 </Grid>
                             </Grid>
                         )}
@@ -163,6 +170,6 @@ export default function TodoDialog({ dialog, changeDialog, dispatch, type, userI
                     <Button onClick={changeDialog}>Close</Button>
                 </DialogActions>
             </Dialog>
-        </React.Fragment>
+        </Grid>
     );
 }

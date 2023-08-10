@@ -36,7 +36,7 @@ const AlertDialog = ({ title, description, open, setOpen, option1, option2 }) =>
                             className='alert-content-bottom'
                             sx={{
                                 '&:hover': {
-                                    backgroundColor: '#53469c',
+                                    backgroundColor: '#53469c40',
                                     color: 'white'
                                 },
                             }}
@@ -55,7 +55,7 @@ const AlertDialog = ({ title, description, open, setOpen, option1, option2 }) =>
                             className='alert-content-bottom'
                             sx={{
                                 '&:hover': {
-                                    backgroundColor: '#53469c',
+                                    backgroundColor: '#53469c40',
                                     color: 'white'
                                 },
                             }}

@@ -1,4 +1,3 @@
-import * as React from 'react';
 
 import {
     Grid,
@@ -6,6 +5,7 @@ import {
     Tab,
     IconButton
 } from '@mui/material';
+import { useEffect,useState } from "react";
 
 import {
     Add
@@ -31,23 +31,23 @@ export default function TodoBoard() {
     const userId = useSelector(state => state.user.userID)
 
     //flatlist lists
-    const [data, setData] = React.useState([]);
-    const [favData, setFavData] = React.useState([]);
-    const [finData, setFinData] = React.useState([]);
+    const [data, setData] = useState([]);
+    const [favData, setFavData] = useState([]);
+    const [finData, setFinData] = useState([]);
     
-    const [updateTodoDialog, setUpdateTodoDialog] = React.useState(false);
-    const [AddTodoDialog, setAddTodoDialog] = React.useState(false);
-    const [selectedTodo, setSelectedTodo] = React.useState(null);
+    const [updateTodoDialog, setUpdateTodoDialog] = useState(false);
+    const [AddTodoDialog, setAddTodoDialog] = useState(false);
+    const [selectedTodo, setSelectedTodo] = useState(null);
     
-    const [info, setInfo] = React.useState(false);
-    const [tabValue, setTabValue] = React.useState('1');
+    const [info, setInfo] = useState(false);
+    const [tabValue, setTabValue] = useState('1');
     
-    const [userAction, setUserAction] = React.useState(false);
-    const [columnWidth, setColumnWidth] = React.useState('40vw');
+    const [userAction, setUserAction] = useState(false);
+    const [columnWidth, setColumnWidth] = useState('40vw');
 
-    const [radioSortValue, setRadioSortValue] = React.useState('title');
-    const [radioOrderValue, setRadioOrderValue] = React.useState('');
-    const [searchTerm, setSearchTerm] = React.useState('');
+    const [radioSortValue, setRadioSortValue] = useState('title');
+    const [radioOrderValue, setRadioOrderValue] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
 
     const handleTabValue = (event, newValue) => {
         setTabValue(newValue);
@@ -77,17 +77,17 @@ export default function TodoBoard() {
     const renderWhenEmpty = () => {
         return <div style={{ color: 'black', textAlign: 'center' }}>This List is Empty...</div>
     }
+    const fetchTodos = async () => {
+        if (tabValue === '1')
+            setData(await FetchData(userId, "todo?UserId="))
+        else if (tabValue === '2')
+            setFavData(await FetchData(userId, "todo/favtodo/"))
+        else
+            setFinData(await FetchData(userId, "todo/finishedtodo/"))
+    }
 
-    React.useEffect(() => {
+    useEffect(() => {
 
-        const fetchTodos = async () => {
-            if (tabValue === '1')
-                setData(await FetchData(userId, "todo?UserId="))
-            else if (tabValue === '2')
-                setFavData(await FetchData(userId, "todo/favtodo/"))
-            else
-                setFinData(await FetchData(userId, "todo/finishedtodo/"))
-        }
 
         fetchTodos();
     }, [tabValue, userAction, userId])

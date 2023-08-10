@@ -38,10 +38,12 @@
 .account-form-style {
     display: flex;
     flex-direction: column !important;
-    height: 100%;
-    padding: 10%;
+    height: 20vh;
+    padding: 20vw;
     align-items: center;
-    border: 1px solid black;
+    border-bottom: 1px solid black;
+    justify-content: center;
+    align-items: center;
 }
 
 .form-input-container {
@@ -62,10 +64,43 @@
 
 .delete-user-button-container{
     justify-content: center;
-    padding: 5%;
+    padding: 50px;
 }
 
 .save-button-container{
     justify-content: center;
     padding: 5%;
+}
+
+.account-form-input {
+    margin: 0.5rem 0px !important;
+}
+
+.account-form-button {
+    margin: 1rem 0px;
+    color: white;
+    background-color: #53469c;
+}
+
+.account-form-button:hover {
+    margin: 1rem 0px;
+    color: white;
+    background-color: #8a82b5;
+}
+
+.account-delete-user-button {
+        color: white;
+        background-color: rgb(235,20,0);
+        width: 40%
+}
+
+.account-delete-user-button:hover {
+    color: white;
+    background-color: rgb(255, 105, 92);
+    width: 40%
+}
+
+.account-form-title{
+    margin-bottom: 1rem;
+    border-bottom: 1px solid black;
 }

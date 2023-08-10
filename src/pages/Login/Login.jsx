@@ -61,7 +61,6 @@ const Login = () => {
         <AlertTitle>{alert === "USER_FOUND" ? "Success" : alert === "USER_DEACTIVE" ? "User Deactive" : "This user not found"}</AlertTitle>
         <strong>{alert === "USER_FOUND" ? "success" : alert === "USER_DEACTIVE" ? "You need to activate your account" : "Please check username or password"}</strong>
       </Alert>}
-      <Grid className='image-container' />
       <Formik
         initialValues={{
           username: "",

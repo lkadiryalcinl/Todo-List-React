@@ -1,9 +1,22 @@
-.icon-button-container {
-    position: absolute;
-    bottom: 1rem;
-    right: 20px;
-    left: 20px;
+.icon-button {
+    border-radius: 20px !important;
+    width: 30% !important;
+    background-color: #53469c !important; 
+}
+
+.icon-button:hover {
+    background-color: #53469c40 !important;
+}
+
+.icon-button-container{
+    margin-top: 1rem;
     justify-content: center;
     align-items: center;
-    background-color: #53469c;
+}
+
+.icon {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    color: white;
 }

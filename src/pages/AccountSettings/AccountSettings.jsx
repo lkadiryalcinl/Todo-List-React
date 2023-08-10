@@ -1,21 +1,19 @@
 import {
-    useState,
-    useEffect
+    useState
 } from 'react'
+
+import './AccountSettings.css'
+import '../../components/TodoBoard/TodoBoard.css'
 import {
     Grid,
     Typography,
     TextField,
     Button,
     Tab,
-    Box,
     Alert,
     AlertTitle
 } from '@mui/material'
 
-import {
-    Edit
-} from '@mui/icons-material'
 
 import {
     TabContext,
@@ -28,8 +26,7 @@ import { ChangePassword, UserUpdateValid } from '../../validation/validation';
 import Navbar from '../../components/Navbar/Navbar'
 import AlertDialog from '../../components/Dialog/AlertDialog/AlertDialog';
 
-import './AccountSettings.css'
-import '../../components/TodoBoard/TodoBoard.css'
+
 
 const AccountSettings = () => {
     const [tabValue, setTabValue] = useState('1');
@@ -89,9 +86,15 @@ const AccountSettings = () => {
                                         handleSubmit,
                                         isSubmitting,
                                     }) => (
-                                        <Grid className='account-form-style'>
+                                        <Grid className='account-form-style' >
                                             <Grid container className='form-input-container'>
+                                                <Typography
+                                                    variant='h4'
+                                                    className='account-form-title'
+                                                >Edit User
+                                                </Typography>
                                                 <TextField
+                                                    className='account-form-input'
                                                     label={errors.username && values.username.length !== 0 ? errors.username : 'Username'}
                                                     type="text"
                                                     name="username"
@@ -101,6 +104,7 @@ const AccountSettings = () => {
                                                 />
 
                                                 <TextField
+                                                    className='account-form-input'
                                                     label={errors.email && values.email.length !== 0 ? errors.email : 'E-mail'}
                                                     type="text"
                                                     name="email"
@@ -110,6 +114,7 @@ const AccountSettings = () => {
                                                 />
 
                                                 <TextField
+                                                    className='account-form-input'
                                                     label={errors.password && values.password.length !== 0 ? errors.password : 'Confirm Password'}
                                                     type="password"
                                                     name="password"
@@ -120,26 +125,18 @@ const AccountSettings = () => {
                                                 <Button
                                                     type="submit"
                                                     onClick={handleSubmit}
-                                                    style={{
-                                                        color: 'white',
-                                                        backgroundColor: '#53469c'
-                                                    }}
+                                                    className='account-form-button'
                                                 >
                                                     Save Changes
                                                 </Button>
                                             </Grid>
                                         </Grid>
-
                                     )}
                                 </Formik>
                                 <Grid container className='delete-user-button-container'>
                                     <Button
                                         onClick={() => setOpenAlert(true)}
-                                        style={{
-                                            color: 'white',
-                                            backgroundColor: 'rgb(235,20,0)',
-                                            width: '40%'
-                                        }}
+                                        className='account-delete-user-button'
                                     >
                                         Delete User
                                     </Button>
@@ -168,7 +165,13 @@ const AccountSettings = () => {
                                     }) => (
                                         <Grid className='account-form-style'>
                                             <Grid container className='form-input-container'>
+                                                <Typography
+                                                    variant='h4'
+                                                    className='account-form-title'
+                                                >Change Password
+                                                </Typography>
                                                 <TextField
+                                                    className='account-form-input'
                                                     label={errors.oldpass && values.oldpass.length !== 0 ? errors.oldpass : 'Old Password'}
                                                     type="password"
                                                     name="oldpass"
@@ -178,6 +181,7 @@ const AccountSettings = () => {
                                                 />
 
                                                 <TextField
+                                                    className='account-form-input'
                                                     label={errors.newpass && values.newpass.length !== 0 ? errors.newpass : 'New Password'}
                                                     type="password"
                                                     name="newpass"
@@ -187,6 +191,7 @@ const AccountSettings = () => {
                                                 />
 
                                                 <TextField
+                                                    className='account-form-input'
                                                     label={errors.passagain && values.passagain.length !== 0 ? errors.passagain : 'New Password Again'}
                                                     type="password"
                                                     name="passagain"
@@ -197,10 +202,7 @@ const AccountSettings = () => {
                                                 <Button
                                                     type="submit"
                                                     onClick={handleSubmit}
-                                                    style={{
-                                                        color: 'white',
-                                                        backgroundColor: '#53469c'
-                                                    }}
+                                                    className='account-form-button'
                                                 >
                                                     Change Password
                                                 </Button>
