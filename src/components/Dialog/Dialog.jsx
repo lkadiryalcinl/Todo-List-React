@@ -25,6 +25,7 @@ import './Dialog.css'
 import tr from "date-fns/locale/tr";
 import { AddTodo, UpdateTodo } from '../../utils/utils';
 import { TodoValidation } from '../../validation/validation';
+import { Add } from '@mui/icons-material';
 registerLocale("tr", tr);
 
 export default function TodoDialog({ dialog, changeDialog, dispatch, type, userId, data }) {
@@ -149,9 +150,9 @@ export default function TodoDialog({ dialog, changeDialog, dispatch, type, userI
                                         className=''
                                     />
                                 </Grid>
-                                <Grid className='icon-button-container'>
+                                <Grid container className='icon-button-container'>
                                     <IconButton type="submit" disabled={isSubmitting} onClick={handleSubmit}>
-                                        Submit
+                                        <Add/>
                                     </IconButton>
                                 </Grid>
                             </Grid>

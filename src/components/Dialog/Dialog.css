@@ -1,6 +1,9 @@
 .icon-button-container {
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    align-items: center !important;
+    position: absolute;
+    bottom: 1rem;
+    right: 20px;
+    left: 20px;
+    justify-content: center;
+    align-items: center;
+    background-color: #53469c;
 }
