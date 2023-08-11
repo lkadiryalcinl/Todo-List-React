@@ -22,7 +22,6 @@ const SortCard = ({ radioSortValue, setRadioSortValue }) => {
     const handleRadioSortValue = (event) => {
         if (setRadioSortValue)
             setRadioSortValue(event.target.value);
-        console.log(radioSortValue);
     };
 
     return (

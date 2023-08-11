@@ -36,6 +36,7 @@ const AccountSettings = () => {
     const [tabValue, setTabValue] = useState('1');
     const [openAlert, setOpenAlert] = useState(false);
     const [alert, setAlert] = useState("");
+    const [passAlert, setPassAlert] = useState("");
     const [count, setCount] = useState(0);
 
     const user = useSelector(state => state.user.user)
@@ -60,7 +61,6 @@ const AccountSettings = () => {
         const fetchedUser = await GetUserByID(userId);
         dispatch({ type: "SET_USER", payload: fetchedUser })
     }
-
     useEffect(() => {
         fetchUser();
     }, [count,dispatch])
@@ -75,7 +75,6 @@ const AccountSettings = () => {
                             <TabList onChange={handleTabValue} centered className='tablist-container' orientation="vertical">
                                 <Tab label="Edit User" value="1" className='tab_item_style' />
                                 <Tab label="Change Password" value="2" className='tab_item_style' />
-                                <Tab label="My Groups" value="3" className='tab_item_style' />
                             </TabList>
                         </Grid>
                         <Grid
@@ -171,7 +170,7 @@ const AccountSettings = () => {
                                     validationSchema={ChangePasswordValid}
                                     onSubmit={async (values, { setSubmitting }) => {
                                         const res = await ChangePassword(values, userId)
-                                        
+                                        setPassAlert(res)
                                         setSubmitting(false)
                                     }}
                                 >
@@ -233,9 +232,6 @@ const AccountSettings = () => {
                                     )}
                                 </Formik>
                             </TabPanel>
-                            <TabPanel value="3">
-
-                            </TabPanel>
                         </Grid>
                     </TabContext>
                 </Grid>
@@ -257,8 +253,20 @@ const AccountSettings = () => {
                     left: '40%'
                 }}
             >
-                <AlertTitle>{alert === "Success" ? "Success" : alert === "PasswordWrong" ? "Password Wrong" : "Warning"}</AlertTitle>
+                <AlertTitle>{alert === "Success" ? "Success" : alert === "Passwrong" ? "Password Wrong" : "Warning"}</AlertTitle>
                 <strong>{alert === "Success" ? "The user succesfully updated." : alert === "PasswordWrong" ? "The password you typed is wrong" : "E-mail or Username taken."}</strong>
+            </Alert>}
+            {passAlert?.length !== 0 && <Alert
+                severity={passAlert === "Success" ? "success" : "warning"}
+                style={{
+                    position: 'absolute',
+                    top: '5%',
+                    right: '30%',
+                    left: '40%'
+                }}
+            >
+                <AlertTitle>{passAlert === "Success" ? "Success" : passAlert === "PasswordSame" ? "Passwords Same" : "Password Wrong"}</AlertTitle>
+                <strong>{passAlert === "Success" ? "The user succesfully updated." : passAlert === "PasswordSame" ? "The password you typed is same with old password." : "The password you typed is wrong."}</strong>
             </Alert>}
         </>
     )

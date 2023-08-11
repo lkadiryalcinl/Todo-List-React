@@ -237,7 +237,6 @@ const GetUserByID = async (UserID) => {
 }
 
 const ChangePassword = async (passData, UserID) => {
-
     const body = {
         userID: UserID,
         oldPassword: passData.oldpass,
@@ -255,7 +254,7 @@ const ChangePassword = async (passData, UserID) => {
         const res = await response.json()
 
         if (response.ok) {
-            return res;
+            return res.changePasswordResponse;
         } else {
             console.error('Kullanıcı bulunamadı: ', response.status, response.statusText);
         }
@@ -265,7 +264,6 @@ const ChangePassword = async (passData, UserID) => {
 }
 
 const EditUser = async (userData, UserID) => {
-    console.log(userData);
     const body = {
         userID: UserID,
         username: userData.username,
@@ -283,7 +281,7 @@ const EditUser = async (userData, UserID) => {
         });
         const res = await response.json()
         if (response.ok) {
-            return res;
+            return res.editUserResponse;
         } else {
             console.error('Kullanıcı bulunamadı: ', response.status, response.statusText);
         }

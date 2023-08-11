@@ -38,10 +38,10 @@ const Login = () => {
     setOpenAlert(!openAlert);
   };
 
-  useEffect(() => {
-    if (alert === "USER_DEACTIVE")
-      setOpenAlert(!openAlert)
-  }, [openAlert,alert, again])
+  // useEffect(() => {
+  //   if (alert === "USER_DEACTIVE")
+  //     setOpenAlert(!openAlert)
+  // }, [openAlert,alert, again])
 
   useEffect(() => {
     if (userID !== -1)
@@ -70,6 +70,7 @@ const Login = () => {
         onSubmit={async (values, { setSubmitting }) => {
           const result = await HandleAuth(navigate, dispatch, values, "Login")
           setAlert(result.text)
+          setOpenAlert(true)
           setUserID(result.userID)
           setAgain(!again)
           setSubmitting(false)
